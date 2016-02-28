@@ -9,12 +9,16 @@ def autograder(url):
     # your code here
     return results
 
+def get_ingredients(soup):
+	letters = soup.find_all("span", itemprop="ingredients")
+	for element in letters:
+		print element.get_text()
 
 def main():
     '''This is our main function!'''
     r = urllib.urlopen('http://allrecipes.com/recipe/220414/hot-tamale-pie/').read()
-    soup = BeautifulSoup(r)
-    print soup.prettify()[0:2000]
+    soup = BeautifulSoup(r, "lxml")
+    get_ingredients(soup)
     return
 
 if __name__ == '__main__':
