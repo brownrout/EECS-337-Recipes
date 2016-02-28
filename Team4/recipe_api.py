@@ -14,11 +14,17 @@ def get_ingredients(soup):
 	for element in letters:
 		print element.get_text()
 
+def get_directions(soup):
+    directions = soup.find_all("span", class_="recipe-directions__list--item")
+    for element in directions:
+        print element.get_text()
+
 def main():
     '''This is our main function!'''
     r = urllib.urlopen('http://allrecipes.com/recipe/220414/hot-tamale-pie/').read()
     soup = BeautifulSoup(r, "lxml")
     get_ingredients(soup)
+    get_directions(soup)
     return
 
 if __name__ == '__main__':
