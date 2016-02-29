@@ -13,14 +13,15 @@ def autograder(url):
     return results
 
 def get_ingredients(soup):
-	letters = soup.find_all("span", itemprop="ingredients")
-    #for element in letters:
-        #print element.get_text()
+    letters = soup.find_all("span", itemprop="ingredients")
+    for element in letters:
+        print element.get_text()
 
 def get_directions(soup):
     directions_string = ""
     directions = soup.find_all("span", class_="recipe-directions__list--item")
     for element in directions:
+        #print str(element.text)
         directions_string += " " + str(element.text)
     return directions_string
 
@@ -29,8 +30,8 @@ def get_methods(soup):
     tokenizer = RegexpTokenizer(r'\w+')
 
     directions_string = get_directions(soup)
-    print directions_string
-    text_file = open("methods.txt", "r")
+    #print directions_string
+    text_file = open("Team4/methods.txt", "r")
     lines = text_file.readlines()
     methods = []
     for x in lines:
@@ -55,7 +56,7 @@ def get_methods(soup):
             elif y[:-1]+ "ing" == x.lower():
                 cnt[y[:-1]+ "ing"] += 1
                 cnt[y]+=1
-    print cnt
+    #print cnt
     print "the most common method: " + cnt.most_common(1)[0][0]
     print "all of the methods are:"
     for x in cnt.most_common():
@@ -68,8 +69,10 @@ def main():
     r = urllib.urlopen('http://allrecipes.com/recipe/80827/easy-garlic-broiled-chicken/').read()
     soup = BeautifulSoup(r, "lxml")
     get_ingredients(soup)
+    print '\n'
     get_directions(soup)
     get_methods(soup)
+
     return
 
 
