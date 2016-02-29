@@ -1,5 +1,6 @@
 sear
 rotisserie
+broil
 fry
 grill
 barbeque
@@ -19,12 +20,10 @@ coddle
 blanch
 marinate
 skillet
-broil
 smoke
 microwave
 bake
 baste
-broil
 boil
 stew
 pound

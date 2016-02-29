@@ -39,18 +39,22 @@ def get_methods(soup):
 
     directions_list = tokenizer.tokenize(directions_string)
 
-
-
     for x in directions_list:
         for y in methods:
             if y == x.lower():
                 cnt[y] += 1
             elif y + "ing" == x.lower():
                 cnt[y+"ing"] += 1
+                cnt[y] += 1
             elif y + "s" == x.lower():
                 cnt[y+"s"] += 1
+                cnt[y]+=1
+            elif y + "er" == x.lower():
+                cnt[y+"er"] += 1
+                cnt[y] += 1
             elif y[:-1]+ "ing" == x.lower():
                 cnt[y[:-1]+ "ing"] += 1
+                cnt[y]+=1
     print cnt
     print "the most common method: " + cnt.most_common(1)[0][0]
     print "all of the methods are:"
