@@ -25,6 +25,37 @@ def get_directions(soup):
         directions_string += " " + str(element.text)
     return directions_string
 
+def get_tools(soup):
+    cnt = Counter()
+    tokenizer = RegexpTokenizer(r'\w+')
+
+    directions_string = get_directions(soup)
+    text_file = open("Team4/tools.txt", "r")
+    lines = text_file.readlines()
+    tools = []
+    for x in lines:
+        new = x.rstrip('\n')
+        tools.append(new)
+
+    directions_list = map(lambda x:x.lower(),tokenizer.tokenize(directions_string))
+
+    used_list = []
+    for x in range(len(directions_list)):
+        if x + 1 < len(directions_list):
+            two_word_tool = directions_list[x] + ' ' + directions_list[x+1]
+            used_word = directions_list[x+1]
+        one_word_tool = directions_list[x]
+        for tool in tools:
+            if tool == two_word_tool:
+                used_list.append(used_word)
+                cnt[tool] += 1
+            elif tool == one_word_tool and tool not in used_list:
+                cnt[tool] +=1
+
+    print "all of the tools are:"
+    for x in cnt.most_common():
+        print x[0]
+
 def get_methods(soup):
     cnt = Counter()
     tokenizer = RegexpTokenizer(r'\w+')
@@ -72,6 +103,7 @@ def main():
     print '\n'
     get_directions(soup)
     get_methods(soup)
+    get_tools(soup)
 
     return
 
