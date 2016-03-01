@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import urllib
 from collections import Counter
 from nltk.tokenize import RegexpTokenizer
+answers = {}
 
 
 
@@ -48,7 +49,6 @@ def get_ingredients(soup, dct):
     # for x in dct['ingredients']:
     #     for k,v in x.items():
     #         print k + " : " + v
-    print 'ingredient dictionary:'
     print dct['ingredients']
 
 def parse_ingredient(ingredient):
@@ -96,8 +96,10 @@ def get_directions(soup):
         directions_string += " " + str(element.text)
     return directions_string
 
-def get_tools(soup):
+def get_tools(soup, dct):
     cnt = Counter()
+    dct["cooking tools"] = []
+
     tokenizer = RegexpTokenizer(r'\w+')
 
     directions_string = get_directions(soup)
@@ -123,13 +125,16 @@ def get_tools(soup):
             elif tool == one_word_tool and tool not in used_list:
                 cnt[tool] +=1
 
-    print "all of the tools are:"
     for x in cnt.most_common():
-        print x[0]
+        dct["cooking tools"].append(x[0])
 
-def get_methods(soup):
+    print dct
+
+def get_methods(soup, dct):
     cnt = Counter()
     tokenizer = RegexpTokenizer(r'\w+')
+    dct["cooking methods"] = []
+    dct["primary cooking method"] = " "
 
     directions_string = get_directions(soup)
     #print directions_string
@@ -147,23 +152,16 @@ def get_methods(soup):
             if y == x.lower():
                 cnt[y] += 1
             elif y + "ing" == x.lower():
-                cnt[y+"ing"] += 1
                 cnt[y] += 1
             elif y + "s" == x.lower():
-                cnt[y+"s"] += 1
                 cnt[y]+=1
             elif y + "er" == x.lower():
-                cnt[y+"er"] += 1
                 cnt[y] += 1
             elif y[:-1]+ "ing" == x.lower():
-                cnt[y[:-1]+ "ing"] += 1
                 cnt[y]+=1
-    #print cnt
-    print "the most common method: " + cnt.most_common(1)[0][0]
-    print "all of the methods are:"
+    dct["primary cooking method"] = cnt.most_common(1)[0][0]
     for x in cnt.most_common():
-        print x[0]
-    print '\n'
+        dct["cooking methods"].append(x[0])
 
 
 
@@ -171,12 +169,11 @@ def main():
     '''This is our main function!'''
     r = urllib.urlopen('http://allrecipes.com/recipe/80827/easy-garlic-broiled-chicken/').read()
     soup = BeautifulSoup(r, "lxml")
-    answers = {}
     get_ingredients(soup, answers)
     print '\n'
     get_directions(soup)
-    get_methods(soup)
-    get_tools(soup)
+    get_methods(soup, answers)
+    get_tools(soup, answers)
 
     return
 
