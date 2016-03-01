@@ -5,6 +5,8 @@ from collections import Counter
 from nltk.tokenize import RegexpTokenizer
 
 
+
+
 def autograder(url):
     '''Accepts the URL for a recipe, and returns a dictionary of the
     parsed results in the correct format. See project sheet for
@@ -12,10 +14,79 @@ def autograder(url):
     # your code here
     return results
 
-def get_ingredients(soup):
+# 1/2 cup butter
+# 3 tablespoons minced garlic
+# 3 tablespoons soy sauce
+# 1/4 teaspoon black pepper
+# 1 tablespoon dried parsley
+# 6 boneless chicken thighs, with skin
+# dried parsley, to taste
+
+# "name": "parsley",
+# "quantity": 1,
+# "measurement":  "cup",
+# "descriptor":   "fresh",
+# "preparation":  "chopped",
+# "prep-description": "finely"
+
+def get_ingredients(soup, dct):
+    dct["ingredients"] = []
     letters = soup.find_all("span", itemprop="ingredients")
+    
     for element in letters:
-        print element.get_text()
+        quantity, measurement, name = parse_ingredient(element.get_text().lower())
+        d = {
+          'name': name,
+          'quantity':quantity,
+          'measurement':measurement,
+          'descriptor': "unimplemented",
+          'preparation':  "unimplemented",
+          'prep-description': "unimplemented"
+        }
+        dct["ingredients"].append(d)
+    
+    # for x in dct['ingredients']:
+    #     for k,v in x.items():
+    #         print k + " : " + v
+    print 'ingredient dictionary:'
+    print dct['ingredients']
+
+def parse_ingredient(ingredient):
+    
+    quantity = ''
+    name = ''
+    measurement = '' 
+
+    text_file = open("Team4/units.txt", "r")
+    lines = text_file.readlines()
+    units = []
+    for x in lines:
+        new = x.rstrip('\n')
+        units.append(unicode(new, 'utf-8'))
+    
+    ingLst = ingredient.split()
+    for word in ingLst:
+        if word[0].isnumeric():
+            quantity = word
+            continue
+        elif word in units:
+            measurement = word
+            continue
+    
+    if measurement in ingLst:
+        ingLst.remove(measurement)
+    if quantity in ingLst:
+        ingLst.remove(quantity)
+
+    name = ' '.join(ingLst)
+
+    if quantity == '':
+        quantity = 'none'
+    if measurement == '':
+        measurement = 'none'
+
+    return quantity, measurement, name
+  
 
 def get_directions(soup):
     directions_string = ""
@@ -92,6 +163,7 @@ def get_methods(soup):
     print "all of the methods are:"
     for x in cnt.most_common():
         print x[0]
+    print '\n'
 
 
 
@@ -99,7 +171,8 @@ def main():
     '''This is our main function!'''
     r = urllib.urlopen('http://allrecipes.com/recipe/80827/easy-garlic-broiled-chicken/').read()
     soup = BeautifulSoup(r, "lxml")
-    get_ingredients(soup)
+    answers = {}
+    get_ingredients(soup, answers)
     print '\n'
     get_directions(soup)
     get_methods(soup)
