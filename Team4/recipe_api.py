@@ -4,7 +4,10 @@ import urllib
 from collections import Counter
 from nltk.tokenize import RegexpTokenizer
 
-
+units = []
+descriptors = []
+tools = []
+methods = []
 
 
 def autograder(url):
@@ -14,32 +17,46 @@ def autograder(url):
     # your code here
     return results
 
-# 1/2 cup butter
-# 3 tablespoons minced garlic
-# 3 tablespoons soy sauce
-# 1/4 teaspoon black pepper
-# 1 tablespoon dried parsley
-# 6 boneless chicken thighs, with skin
-# dried parsley, to taste
+def pre_parse():
+    text_file = open("Team4/units.txt", "r")
+    lines = text_file.readlines()
+    global units
+    for x in lines:
+        new = x.rstrip('\n')
+        units.append(unicode(new, 'utf-8'))
 
-# "name": "parsley",
-# "quantity": 1,
-# "measurement":  "cup",
-# "descriptor":   "fresh",
-# "preparation":  "chopped",
-# "prep-description": "finely"
+    text_file = open("Team4/descriptor.txt", "r")
+    lines = text_file.readlines()
+    global descriptors
+    for x in lines:
+        new = x.rstrip('\n')
+        descriptors.append(unicode(new, 'utf-8'))
+
+    text_file = open("Team4/tools.txt", "r")
+    lines = text_file.readlines()
+    global tools
+    for x in lines:
+        new = x.rstrip('\n')
+        tools.append(new)
+
+    text_file = open("Team4/methods.txt", "r")
+    lines = text_file.readlines()
+    global methods
+    for x in lines:
+        new = x.rstrip('\n')
+        methods.append(new)
 
 def get_ingredients(soup, dct):
     dct["ingredients"] = []
     letters = soup.find_all("span", itemprop="ingredients")
     
     for element in letters:
-        quantity, measurement, name = parse_ingredient(element.get_text().lower())
+        quantity, measurement, name, descriptor = parse_ingredient(element.get_text().lower())
         d = {
           'name': name,
           'quantity':quantity,
           'measurement':measurement,
-          'descriptor': "unimplemented",
+          'descriptor': descriptor,
           'preparation':  "unimplemented",
           'prep-description': "unimplemented"
         }
@@ -56,14 +73,11 @@ def parse_ingredient(ingredient):
     quantity = ''
     name = ''
     measurement = '' 
-
-    text_file = open("Team4/units.txt", "r")
-    lines = text_file.readlines()
-    units = []
-    for x in lines:
-        new = x.rstrip('\n')
-        units.append(unicode(new, 'utf-8'))
+    descriptor = ''
     
+    global units
+    global descriptors
+
     ingLst = ingredient.split()
     for word in ingLst:
         if word[0].isnumeric():
@@ -72,21 +86,39 @@ def parse_ingredient(ingredient):
         elif word in units:
             measurement = word
             continue
+        elif word in descriptors:
+            descriptor += word
+            continue
     
     if measurement in ingLst:
         ingLst.remove(measurement)
     if quantity in ingLst:
         ingLst.remove(quantity)
+    if descriptor in ingLst:
+        ingLst.remove(descriptor)
 
     name = ' '.join(ingLst)
 
     if quantity == '':
         quantity = 'none'
+    else:
+        quantity = convert(quantity)
     if measurement == '':
         measurement = 'none'
+    if descriptor == '':
+        descriptor = 'none'
 
-    return quantity, measurement, name
-  
+    return quantity, measurement, name, descriptor
+
+# http://stackoverflow.com/questions/575925/how-to-convert-rational-and-decimal-number-strings-to-floats-in-python
+def convert(s):
+    try:
+        float(s)
+        return s
+    except ValueError:
+        num, denom = s.split('/')
+        return float(num) / float(denom)
+
 
 def get_directions(soup):
     directions_string = ""
@@ -101,12 +133,8 @@ def get_tools(soup):
     tokenizer = RegexpTokenizer(r'\w+')
 
     directions_string = get_directions(soup)
-    text_file = open("Team4/tools.txt", "r")
-    lines = text_file.readlines()
-    tools = []
-    for x in lines:
-        new = x.rstrip('\n')
-        tools.append(new)
+
+    global tools
 
     directions_list = map(lambda x:x.lower(),tokenizer.tokenize(directions_string))
 
@@ -133,12 +161,8 @@ def get_methods(soup):
 
     directions_string = get_directions(soup)
     #print directions_string
-    text_file = open("Team4/methods.txt", "r")
-    lines = text_file.readlines()
-    methods = []
-    for x in lines:
-        new = x.rstrip('\n')
-        methods.append(new)
+
+    global methods
 
     directions_list = tokenizer.tokenize(directions_string)
 
@@ -171,6 +195,10 @@ def main():
     '''This is our main function!'''
     r = urllib.urlopen('http://allrecipes.com/recipe/80827/easy-garlic-broiled-chicken/').read()
     soup = BeautifulSoup(r, "lxml")
+
+    #intialize all our txt file lists
+    pre_parse()
+
     answers = {}
     get_ingredients(soup, answers)
     print '\n'
