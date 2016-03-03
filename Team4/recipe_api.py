@@ -168,7 +168,7 @@ def get_steps(soup,dct):
     dct['steps'] = []
     directions = soup.find_all("span", class_="recipe-directions__list--item")
     for element in directions:
-        dct['steps'].append(str(element.text))
+        dct['steps'].append(str(element.text).lower())
     return
 
 def get_tools(soup, dct):
