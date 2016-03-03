@@ -116,10 +116,10 @@ def parse_ingredient(ingredient):
             measurement = word
             continue
         elif word in descriptors:
-            descriptor += word
+            descriptor = word
             continue
         elif word in preparations:
-            preparation += word
+            preparation = word
             continue
     
     if measurement in ingLst:
@@ -235,8 +235,21 @@ def main():
     get_directions(soup)
     get_methods(soup, answers)
     get_tools(soup, answers)
-    print answers
-
+    
+    for key in answers:
+        print key + ":\n"
+        #if hasattr(answers[key], 'lower'):
+        if isinstance(answers[key], basestring):
+            print answers[key]
+        elif isinstance(answers[key], list):
+            for value in answers[key]:
+                if isinstance(value, dict):
+                        for x in value:
+                            print x + ": " + str(value[x])
+                        print '\n'
+                else:
+                    print value
+        print '\n'
     return
 
 
