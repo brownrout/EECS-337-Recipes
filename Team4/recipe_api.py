@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import urllib
 from collections import Counter
 from nltk.tokenize import RegexpTokenizer
+from operator import itemgetter
 
 answers = {}
 
@@ -24,6 +25,7 @@ tools = []
 methods = []
 preparations = []
 
+decrement_check = {"mixing bowl": "mix", "baking pan": "bake", "baking soda": "bake", "baking powder":"bake"}
 
 def autograder(url):
     '''Accepts the URL for a recipe, and returns a dictionary of the
@@ -204,11 +206,10 @@ def get_methods(soup, dct):
     tokenizer = RegexpTokenizer(r'\w+')
     dct["cooking methods"] = []
     dct["primary cooking method"] = " "
-
+    
     title = soup.title.text
     title_string = tokenizer.tokenize(title)
-    print title
-    print title_string
+    dct["title"] = title[:-17]
 
     directions_string = get_directions(soup)
     #print directions_string
@@ -227,13 +228,22 @@ def get_methods(soup, dct):
                 cnt[y]+=1
             elif y + "er" == x.lower():
                 cnt[y] += 1
+            elif y + "ed" == x.lower():
+                cnt[y] += 1
             elif y[:-1]+ "ing" == x.lower():
                 cnt[y]+=1
 
-    print cnt.most_common()
-    print cnt
-    flag = True
 
+    #decrement tools mistaken for methods
+
+    for x in range(0, len(directions_list)-1):
+        for y in decrement_check:
+            test_string = directions_list[x] + " " + directions_list[x+1]
+            if test_string == y:
+                cnt[decrement_check[y]] -= 1
+
+
+    flag = True
     if flag:
         for x in title_string:
             for y in methods:
@@ -241,17 +251,30 @@ def get_methods(soup, dct):
                     dct["primary cooking method"] = y
                     flag = False
                 elif y + "ed" == x.lower():
-                    flag = False
                     dct["primary cooking method"] = y
+                    flag = False
+                elif y + "d" == x.lower():
+                    dct["primary cooking method"] = y
+                    flag = False
+
     if flag:
-        dct["primary cooking method"] = cnt.most_common(1)[0][0]
+        max_list = []
+        max_cnt = cnt.most_common(1)[0][1]
+        
+        for x,v in cnt.most_common():
+            if v== max_cnt:
+                max_list.append(x)
+
+        max_list.sort()
+
+        dct["primary cooking method"] = max_list[0]
 
     for x in cnt.most_common():
         dct["cooking methods"].append(x[0])
 
 def main():
     '''This is our main function!'''
-    r = urllib.urlopen('http://allrecipes.com/recipe/80827/easy-garlic-broiled-chicken/').read()
+    r = urllib.urlopen('http://allrecipes.com/Recipe/Easy-Garlic-Broiled-Chicken/').read()
     soup = BeautifulSoup(r, "lxml")
 
     #intialize all our txt file lists
