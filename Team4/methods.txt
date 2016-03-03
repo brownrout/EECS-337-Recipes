@@ -38,3 +38,15 @@ arrange
 coat
 turn
 sprinkle
+season
+place
+form
+combine
+add
+blend
+pour
+slice
+cook
+reduce
+adjust
+spoon

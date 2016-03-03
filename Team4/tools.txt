@@ -110,4 +110,6 @@ pan
 dish
 skillet
 casserole
-
+mixing bowl
+frying pan
+baking sheet
