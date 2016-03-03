@@ -80,7 +80,7 @@ def get_ingredients(soup, dct):
           'measurement':measurement,
           'descriptor': descriptor,
           'preparation':  preparation,
-          'prep-description': "unimplemented"
+          'prep-description': "none"
         }
         dct["ingredients"].append(d)
     
@@ -164,6 +164,13 @@ def get_directions(soup):
         directions_string += " " + str(element.text)
     return directions_string
 
+def get_steps(soup,dct):
+    dct['steps'] = []
+    directions = soup.find_all("span", class_="recipe-directions__list--item")
+    for element in directions:
+        dct['steps'].append(str(element.text))
+    return
+
 def get_tools(soup, dct):
     cnt = Counter()
     dct["cooking tools"] = []
@@ -229,12 +236,14 @@ def main():
     #intialize all our txt file lists
     pre_parse()
 
+    global answers
     answers = {}
     get_ingredients(soup, answers)
     print '\n'
     get_directions(soup)
     get_methods(soup, answers)
     get_tools(soup, answers)
+    get_steps(soup, answers)
     
     for key in answers:
         print key + ":\n"
