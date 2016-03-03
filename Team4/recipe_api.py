@@ -3,12 +3,26 @@ from bs4 import BeautifulSoup
 import urllib
 from collections import Counter
 from nltk.tokenize import RegexpTokenizer
+
 answers = {}
+
+equivalents = {
+    't': 'teaspoon',
+    'tsp':'teaspoon',
+    'tbsp':'tablespoon',
+    'c':'cup',
+    'oz':'ounce',
+    'pt': 'pint',
+    'qt': 'quart',
+    'gal':'gallon',
+    'lb':'pound'
+}
 
 units = []
 descriptors = []
 tools = []
 methods = []
+preparations = []
 
 
 def autograder(url):
@@ -47,18 +61,25 @@ def pre_parse():
         new = x.rstrip('\n')
         methods.append(new)
 
+    text_file = open("Team4/preparations.txt", "r")
+    lines = text_file.readlines()
+    global preparations
+    for x in lines:
+        new = x.rstrip('\n')
+        preparations.append(new)
+
 def get_ingredients(soup, dct):
     dct["ingredients"] = []
     letters = soup.find_all("span", itemprop="ingredients")
     
     for element in letters:
-        quantity, measurement, name, descriptor = parse_ingredient(element.get_text().lower())
+        quantity, measurement, name, descriptor, preparation = parse_ingredient(element.get_text().lower())
         d = {
           'name': name,
           'quantity':quantity,
           'measurement':measurement,
           'descriptor': descriptor,
-          'preparation':  "unimplemented",
+          'preparation':  preparation,
           'prep-description': "unimplemented"
         }
         dct["ingredients"].append(d)
@@ -66,7 +87,6 @@ def get_ingredients(soup, dct):
     # for x in dct['ingredients']:
     #     for k,v in x.items():
     #         print k + " : " + v
-    print dct['ingredients']
 
 def parse_ingredient(ingredient):
     
@@ -74,12 +94,21 @@ def parse_ingredient(ingredient):
     name = ''
     measurement = '' 
     descriptor = ''
+    preparation = ''
+
+    global equivalents
+    synonyms = []
     
     global units
     global descriptors
 
+    for key in equivalents:
+        synonyms.append(key)
+
     ingLst = ingredient.split()
-    for word in ingLst:
+    for word in ingLst: 
+        if word in synonyms:
+            word = equivalents[word]
         if word[0].isnumeric():
             quantity = word
             continue
@@ -89,6 +118,9 @@ def parse_ingredient(ingredient):
         elif word in descriptors:
             descriptor += word
             continue
+        elif word in preparations:
+            preparation += word
+            continue
     
     if measurement in ingLst:
         ingLst.remove(measurement)
@@ -96,6 +128,8 @@ def parse_ingredient(ingredient):
         ingLst.remove(quantity)
     if descriptor in ingLst:
         ingLst.remove(descriptor)
+    if preparation in ingLst:
+        ingLst.remove(preparation)
 
     name = ' '.join(ingLst)
 
@@ -107,8 +141,10 @@ def parse_ingredient(ingredient):
         measurement = 'none'
     if descriptor == '':
         descriptor = 'none'
+    if preparation == '':
+        preparation = 'none'
 
-    return quantity, measurement, name, descriptor
+    return quantity, measurement, name, descriptor, preparation
 
 # http://stackoverflow.com/questions/575925/how-to-convert-rational-and-decimal-number-strings-to-floats-in-python
 def convert(s):
@@ -156,8 +192,6 @@ def get_tools(soup, dct):
     for x in cnt.most_common():
         dct["cooking tools"].append(x[0])
 
-    print dct
-
 def get_methods(soup, dct):
     cnt = Counter()
     tokenizer = RegexpTokenizer(r'\w+')
@@ -187,8 +221,6 @@ def get_methods(soup, dct):
     for x in cnt.most_common():
         dct["cooking methods"].append(x[0])
 
-
-
 def main():
     '''This is our main function!'''
     r = urllib.urlopen('http://allrecipes.com/recipe/80827/easy-garlic-broiled-chicken/').read()
@@ -203,6 +235,7 @@ def main():
     get_directions(soup)
     get_methods(soup, answers)
     get_tools(soup, answers)
+    print answers
 
     return
 
