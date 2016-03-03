@@ -205,6 +205,11 @@ def get_methods(soup, dct):
     dct["cooking methods"] = []
     dct["primary cooking method"] = " "
 
+    title = soup.title.text
+    title_string = tokenizer.tokenize(title)
+    print title
+    print title_string
+
     directions_string = get_directions(soup)
     #print directions_string
 
@@ -224,7 +229,23 @@ def get_methods(soup, dct):
                 cnt[y] += 1
             elif y[:-1]+ "ing" == x.lower():
                 cnt[y]+=1
-    dct["primary cooking method"] = cnt.most_common(1)[0][0]
+
+    print cnt.most_common()
+    print cnt
+    flag = True
+
+    if flag:
+        for x in title_string:
+            for y in methods:
+                if y == x.lower():
+                    dct["primary cooking method"] = y
+                    flag = False
+                elif y + "ed" == x.lower():
+                    flag = False
+                    dct["primary cooking method"] = y
+    if flag:
+        dct["primary cooking method"] = cnt.most_common(1)[0][0]
+
     for x in cnt.most_common():
         dct["cooking methods"].append(x[0])
 
