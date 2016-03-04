@@ -4,6 +4,7 @@ import urllib
 from collections import Counter
 from nltk.tokenize import RegexpTokenizer
 from operator import itemgetter
+import random
 
 answers = {}
 
@@ -170,7 +171,8 @@ def get_steps(soup,dct):
     dct['steps'] = []
     directions = soup.find_all("span", class_="recipe-directions__list--item")
     for element in directions:
-        dct['steps'].append(str(element.text).lower())
+        if element != '':
+            dct['steps'].append(str(element.text).lower())
     return
 
 def get_tools(soup, dct):
@@ -272,6 +274,66 @@ def get_methods(soup, dct):
     for x in cnt.most_common():
         dct["cooking methods"].append(x[0])
 
+def print_recipe(dct):
+    for key in dct:
+        if key != 'steps':
+            print key + ":\n"
+            if isinstance(dct[key], basestring):
+                print dct[key]
+            elif isinstance(dct[key], list):
+                for value in dct[key]:
+                    if isinstance(value, dict):
+                        for x in value:
+                            print x + ": " + str(value[x])
+                        print '\n'
+                    else:
+                        print value
+            print '\n'
+        else:
+            print key + ":\n"
+            for index, elem in enumerate(dct[key]):
+                if elem != "":
+                    print str(index+1) + ". " + elem
+            print '\n'
+
+def pescatarian(dct):
+    pesc_substitutes = {
+    #proof of conept, needs refining
+        'chicken':['tuna','tofu', 'salmon'],
+        'steak':['tuna','tofu', 'salmon'],
+        'beef':['tuna','tofu', 'salmon'],
+        'turkey':['tuna','tofu', 'salmon']
+    }
+
+    pesc_ingredients = {
+
+    }
+
+    transformed_recipe = dct.copy()
+
+    choice = random.randint(0, 2)
+    changes = ""
+
+    new_list = transformed_recipe['steps']
+    print new_list
+
+    for value in pesc_substitutes:
+        new_list = [w.replace(value, pesc_substitutes[value][choice]) for w in new_list]
+
+    transformed_recipe['steps'] = new_list
+    
+
+    # for value in pesc_substitutes:
+    #     for step in transformed_recipe['steps']:
+    #         if value in step:
+    #             changes += "replacing " + value + " with " + pesc_substitutes[value][choice] + '\n'
+    #             step.replace(value, pesc_substitutes[value][choice])
+
+    print "pescatarian version:"
+    print_recipe(transformed_recipe)
+
+
+
 def main():
     '''This is our main function!'''
     r = urllib.urlopen('http://allrecipes.com/Recipe/Easy-Garlic-Broiled-Chicken/').read()
@@ -288,21 +350,10 @@ def main():
     get_methods(soup, answers)
     get_tools(soup, answers)
     get_steps(soup, answers)
-    
-    for key in answers:
-        print key + ":\n"
-        #if hasattr(answers[key], 'lower'):
-        if isinstance(answers[key], basestring):
-            print answers[key]
-        elif isinstance(answers[key], list):
-            for value in answers[key]:
-                if isinstance(value, dict):
-                        for x in value:
-                            print x + ": " + str(value[x])
-                        print '\n'
-                else:
-                    print value
-        print '\n'
+    print_recipe(answers)
+    print '\n'
+    pescatarian(answers)
+
     return
 
 
