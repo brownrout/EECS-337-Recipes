@@ -401,7 +401,8 @@ def high2lowfat(dct):
     transformed_recipe['steps'] = new_steps
     #transformed_recipe['title'] = new_title
 
-    print transformed_recipe
+    print "low fat version:"
+    print_recipe(transformed_recipe)
 
 def low2highfat(dct):
 
@@ -497,9 +498,9 @@ def main():
                 if (choice2 == 1):
                     pescatarian(recipe_book[choice])
                 elif (choice2 == 2):
-                    low2highfat(recipe_book[choice])
-                elif (choice2 == 3):
                     high2lowfat(recipe_book[choice])
+                elif (choice2 == 3):
+                    low2highfat(recipe_book[choice])
                 else:
                     print "invalid choice"
             else:
