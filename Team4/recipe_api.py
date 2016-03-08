@@ -332,7 +332,7 @@ def pescatarian(dct):
     changes = ""
 
     new_list = transformed_recipe['steps']
-    print new_list
+    #print new_list
 
     for value in pesc_substitutes:
         new_list = [w.replace(value, pesc_substitutes[value][choice]) for w in new_list]
@@ -513,8 +513,6 @@ def main():
     print '\n'
     #pescatarian(answers)
 
-    high2lowfat(answers)
-    #low2highfat(answers)
 
     return
 
