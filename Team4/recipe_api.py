@@ -5,6 +5,8 @@ from collections import Counter
 from nltk.tokenize import RegexpTokenizer
 from operator import itemgetter
 import random
+from fat_transformations import *
+import re
 
 answers = {}
 
@@ -86,6 +88,9 @@ def get_ingredients(soup, dct):
           'prep-description': "none"
         }
         dct["ingredients"].append(d)
+
+    #for x in ingredients:
+    #    print x
     
     # for x in dct['ingredients']:
     #     for k,v in x.items():
@@ -332,6 +337,63 @@ def pescatarian(dct):
     print "pescatarian version:"
     print_recipe(transformed_recipe)
 
+def high2lowfat(dct):
+
+    transformed_recipe = dct.copy()
+    new_ingredients = transformed_recipe['ingredients']
+    new_steps = transformed_recipe['steps']
+    new_title = transformed_recipe['title']
+
+    for y in new_ingredients:
+        for z in high_to_low_stopwords:
+            if z in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(z, '')
+                print y['name']
+
+    for x in substitutions:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, substitutions[x])
+                print y['name']
+
+
+    for z in (high_to_low_stopwords):
+        if z == ',':
+            pass
+        else:
+            for y in new_steps:
+                if z in y.lower():
+                    new_steps = new_steps.remove(z)
+                    print new_steps
+
+
+    for x in substitutions:
+        new_steps = [w.replace(x, substitutions[x]) for w in new_steps]
+
+
+
+    #TITLE IS NOT IMPLEMENTED YET
+    # new_title = new_title.encode('utf-8')
+
+    # for x in substitutions:
+    #     if x in new_title.lower():
+    #         print "detected"
+    #         new_title =new_title.replace(x, substitutions[x])
+    #         print new_title
+
+    
+
+    transformed_recipe['ingredients'] = new_ingredients
+    transformed_recipe['steps'] = new_steps
+    #transformed_recipe['title'] = new_title
+
+    print transformed_recipe
+
+
+
+
 
 
 def main():
@@ -350,9 +412,11 @@ def main():
     get_methods(soup, answers)
     get_tools(soup, answers)
     get_steps(soup, answers)
-    print_recipe(answers)
+    #print_recipe(answers)
     print '\n'
-    pescatarian(answers)
+    #pescatarian(answers)
+
+    high2lowfat(answers)
 
     return
 
