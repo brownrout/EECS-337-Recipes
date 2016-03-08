@@ -349,14 +349,12 @@ def high2lowfat(dct):
             if z in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(z, '')
-                print y['name']
 
     for x in substitutions:
         for y in new_ingredients:
             if x in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(x, substitutions[x])
-                print y['name']
 
 
     for z in (high_to_low_stopwords):
@@ -366,11 +364,73 @@ def high2lowfat(dct):
             for y in new_steps:
                 if z in y.lower():
                     new_steps = new_steps.remove(z)
-                    print new_steps
 
 
     for x in substitutions:
         new_steps = [w.replace(x, substitutions[x]) for w in new_steps]
+
+
+
+    #TITLE IS NOT IMPLEMENTED YET
+    # new_title = new_title.encode('utf-8')
+
+    # for x in substitutions:
+    #     if x in new_title.lower():
+    #         print "detected"
+    #         new_title =new_title.replace(x, substitutions[x])
+    #         print new_title
+
+    
+
+    transformed_recipe['ingredients'] = new_ingredients
+    transformed_recipe['steps'] = new_steps
+    #transformed_recipe['title'] = new_title
+
+    print transformed_recipe
+
+def low2highfat(dct):
+
+    transformed_recipe = dct.copy()
+    new_ingredients = transformed_recipe['ingredients']
+    new_steps = transformed_recipe['steps']
+    new_title = transformed_recipe['title']
+    print transformed_recipe
+
+    for y in new_ingredients:
+        for z in low_to_high_stopwords:
+            if z in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(z, low_to_high_stopwords[z])
+
+
+    for x in low_to_high_subs:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, low_to_high_subs[x])
+
+
+    for x in substitutions:
+        for y in new_ingredients:
+            if substitutions[x] in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(substitutions[x], x)
+
+
+
+    for z in low_to_high_stopwords:
+        if z == ',':
+            pass
+        else:
+            for y in new_steps:
+                if z in y.lower():
+                    y = y.encode('utf-8')
+                    y = y.replace(substitutions[x], x)
+                    #print new_steps
+
+
+    for x in substitutions:
+        new_steps = [w.replace(substitutions[x], x) for w in new_steps]
 
 
 
@@ -398,7 +458,7 @@ def high2lowfat(dct):
 
 def main():
     '''This is our main function!'''
-    r = urllib.urlopen('http://allrecipes.com/Recipe/Easy-Garlic-Broiled-Chicken/').read()
+    r = urllib.urlopen('http://allrecipes.com/recipe/18866/canadian-bacon-macaroni-and-cheese/').read()
     soup = BeautifulSoup(r, "lxml")
 
     #intialize all our txt file lists
@@ -417,6 +477,7 @@ def main():
     #pescatarian(answers)
 
     high2lowfat(answers)
+    #low2highfat(answers)
 
     return
 

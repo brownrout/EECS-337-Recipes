@@ -19,6 +19,10 @@ substitutions = {
     'iceberg lettuce':'arugula',
     'butter':'cooking spray',
     'margarine':'olive oil',
+    'cheddar cheese': "low-fat cheddar cheese",
+    'mozzerella cheese': "low-fat mozzerella cheese",
+    'american cheese': "low-fat american cheese",
+    'cottage cheese': 'low-fat cottage cheese',
     'vegetable oil':'olive oil',
     'shortening':'fat-free margarine',
     'soy sauce':'low-sodium soy sauce',
@@ -46,7 +50,7 @@ low_to_high_subs = {
     'bread' : 'white bread'
 }
 
-low_to_high_stopwords = ["whole wheat", "wheat", "low-fat", "low fat", "healthy", "1%", '2%']
+low_to_high_stopwords = {"whole wheat": "", "wheat": "", "low-fat": "", "low fat": "", "healthy": "", "1%": "", '2%': "", ',': "", "canadian-style": "canadian"}
 high_to_low_stopwords = ["whole", "full-fat", "1%", '2%', ',', 'with skin']
 
 
