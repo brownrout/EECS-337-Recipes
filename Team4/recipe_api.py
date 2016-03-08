@@ -8,7 +8,8 @@ import random
 from fat_transformations import *
 import re
 
-answers = {}
+results = {}
+recipe_book = {}
 
 equivalents = {
     't': 'teaspoon',
@@ -34,7 +35,17 @@ def autograder(url):
     '''Accepts the URL for a recipe, and returns a dictionary of the
     parsed results in the correct format. See project sheet for
     details on correct format.'''
-    # your code here
+    r = urllib.urlopen(url).read()
+    soup = BeautifulSoup(r, "lxml")
+    global results
+    results = {}
+    get_ingredients(soup, results)
+    print '\n'
+    get_directions(soup)
+    get_methods(soup, results)
+    get_tools(soup, results)
+    get_steps(soup, results)
+    #print results
     return results
 
 def pre_parse():
@@ -307,7 +318,8 @@ def pescatarian(dct):
         'chicken':['tuna','tofu', 'salmon'],
         'steak':['tuna','tofu', 'salmon'],
         'beef':['tuna','tofu', 'salmon'],
-        'turkey':['tuna','tofu', 'salmon']
+        'turkey':['tuna','tofu', 'salmon'],
+        'bacon':['tofu','tofu','tofu']
     }
 
     pesc_ingredients = {
@@ -386,7 +398,8 @@ def high2lowfat(dct):
     transformed_recipe['steps'] = new_steps
     #transformed_recipe['title'] = new_title
 
-    print transformed_recipe
+    print "low fat version:"
+    print_recipe(transformed_recipe)
 
 def low2highfat(dct):
 
@@ -394,7 +407,6 @@ def low2highfat(dct):
     new_ingredients = transformed_recipe['ingredients']
     new_steps = transformed_recipe['steps']
     new_title = transformed_recipe['title']
-    print transformed_recipe
 
     for y in new_ingredients:
         for z in low_to_high_stopwords:
@@ -449,7 +461,8 @@ def low2highfat(dct):
     transformed_recipe['steps'] = new_steps
     #transformed_recipe['title'] = new_title
 
-    print transformed_recipe
+    print "high fat version:"
+    print_recipe(transformed_recipe)
 
 
 
@@ -458,20 +471,41 @@ def low2highfat(dct):
 
 def main():
     '''This is our main function!'''
-    r = urllib.urlopen('http://allrecipes.com/recipe/18866/canadian-bacon-macaroni-and-cheese/').read()
-    soup = BeautifulSoup(r, "lxml")
-
     #intialize all our txt file lists
     pre_parse()
 
-    global answers
-    answers = {}
-    get_ingredients(soup, answers)
-    print '\n'
-    get_directions(soup)
-    get_methods(soup, answers)
-    get_tools(soup, answers)
-    get_steps(soup, answers)
+    # http://allrecipes.com/recipe/18866/canadian-bacon-macaroni-and-cheese/
+
+    global recipe_book
+
+    while True:
+        print '\n'
+        print "\noptions:\n1. enter recipe (via url)\n2. transform an existing recipe\n"
+        user_input = input("choose a function: ")
+        if (user_input == 1):
+            url = str(raw_input("enter recipe url: "))
+            recipe_book[len(recipe_book.keys())] = autograder(url)
+        elif (user_input == 2):
+            if len(recipe_book.keys()) != 0:
+                for key in recipe_book:
+                    print str(key) + " : " + recipe_book[key]['title']
+                choice = input("which recipe: ")
+                print "\noptions:\n1. pescatarian\n2. low fat\n3. high fat\n"
+                choice2 = input("which transform: ")
+                if (choice2 == 1):
+                    pescatarian(recipe_book[choice])
+                elif (choice2 == 2):
+                    low2highfat(recipe_book[choice])
+                elif (choice2 == 3):
+                    high2lowfat(recipe_book[choice])
+                else:
+                    print "invalid choice"
+            else:
+                print "you must upload a recipe first"
+
+        else:
+            print "invalid choice\n"
+
     #print_recipe(answers)
     print '\n'
     #pescatarian(answers)
