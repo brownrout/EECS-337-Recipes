@@ -381,6 +381,9 @@ def high2lowfat(dct):
     for x in substitutions:
         new_steps = [w.replace(x, substitutions[x]) for w in new_steps]
 
+    for x in method_substitutions:
+        new_steps = [w.replace(x, method_substitutions[x]) for w in new_steps]
+
 
 
     #TITLE IS NOT IMPLEMENTED YET
@@ -398,8 +401,7 @@ def high2lowfat(dct):
     transformed_recipe['steps'] = new_steps
     #transformed_recipe['title'] = new_title
 
-    print "low fat version:"
-    print_recipe(transformed_recipe)
+    print transformed_recipe
 
 def low2highfat(dct):
 

@@ -55,7 +55,11 @@ high_to_low_stopwords = ["whole", "full-fat", "1%", '2%', ',', 'with skin']
 
 
 method_substitutions = {
+    'deep-fryer': 'oven',
+    'fryer': 'oven',
     'fry':'bake',
+    'fried': 'baked',
+    'frying pan': 'oven',
     'boil':'steam',
     'deep-fry':'bake',
     'pan fry':'bake'
