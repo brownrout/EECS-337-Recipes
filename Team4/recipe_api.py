@@ -6,6 +6,7 @@ from nltk.tokenize import RegexpTokenizer
 from operator import itemgetter
 import random
 from fat_transformations import *
+from carbtransformations import *
 import re
 
 results = {}
@@ -385,21 +386,20 @@ def high2lowfat(dct):
         new_steps = [w.replace(x, method_substitutions[x]) for w in new_steps]
 
 
-
-    #TITLE IS NOT IMPLEMENTED YET
-    # new_title = new_title.encode('utf-8')
-
-    # for x in substitutions:
-    #     if x in new_title.lower():
-    #         print "detected"
-    #         new_title =new_title.replace(x, substitutions[x])
-    #         print new_title
+    new_title = new_title.encode('utf-8').lower()
+    print new_title
+    for x in substitutions:
+         if x in new_title.lower():
+             print "detected"
+             print x
+             new_title =new_title.replace(x, substitutions[x])
+             print new_title
 
     
 
     transformed_recipe['ingredients'] = new_ingredients
     transformed_recipe['steps'] = new_steps
-    #transformed_recipe['title'] = new_title
+    transformed_recipe['title'] = new_title.upper()
 
     print "low fat version:"
     print_recipe(transformed_recipe)
@@ -449,25 +449,128 @@ def low2highfat(dct):
 
 
 
-    #TITLE IS NOT IMPLEMENTED YET
-    # new_title = new_title.encode('utf-8')
 
-    # for x in substitutions:
-    #     if x in new_title.lower():
-    #         print "detected"
-    #         new_title =new_title.replace(x, substitutions[x])
-    #         print new_title
+    new_title = new_title.encode('utf-8').lower()
+    for x in substitutions:
+         if x in new_title.lower():
+             new_title =new_title.replace(x, substitutions[x])
 
     
 
     transformed_recipe['ingredients'] = new_ingredients
     transformed_recipe['steps'] = new_steps
-    #transformed_recipe['title'] = new_title
+    transformed_recipe['title'] = new_title
 
     print "high fat version:"
     print_recipe(transformed_recipe)
 
+def lowcarb(dct):
+    transformed_recipe = dct.copy()
+    new_ingredients = transformed_recipe['ingredients']
+    new_steps = transformed_recipe['steps']
+    new_title = transformed_recipe['title']
 
+    for y in new_ingredients:
+        for z in high_to_lowcarb_stopwords:
+            if z in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(z, '')
+
+    for x in carbsubstitutions:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, carbsubstitutions[x])
+
+
+    for z in high_to_lowcarb_stopwords:
+        if z == ',':
+            pass
+        else:
+            for y in new_steps:
+                if z in y.lower():
+                    new_steps = new_steps.remove(z)
+
+
+    for x in carbsubstitutions:
+        new_steps = [w.replace(x, carbsubstitutions[x]) for w in new_steps]
+
+
+
+    new_title = new_title.encode('utf-8').lower()
+   
+    for x in carbsubstitutions:
+         if x in new_title.lower():
+             new_title =new_title.replace(x, carbsubstitutions[x])
+
+    new_title = new_title + "(low carb)"
+    
+
+
+    transformed_recipe['ingredients'] = new_ingredients
+    transformed_recipe['steps'] = new_steps
+    transformed_recipe['title'] = new_title
+
+    print "low carb version:"
+    print_recipe(transformed_recipe)
+
+def highcarb(dct):
+    transformed_recipe = dct.copy()
+    new_ingredients = transformed_recipe['ingredients']
+    new_steps = transformed_recipe['steps']
+    new_title = transformed_recipe['title']
+
+    for y in new_ingredients:
+        for z in low_to_highcarb_stopwords:
+            if z in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(z, '')
+
+
+    for x in low_to_highcarb_subs:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, low_to_highcarb_subs[x])
+
+
+    for x in carbsubstitutions:
+        for y in new_ingredients:
+            if carbsubstitutions[x] in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(carbsubstitutions[x], x)
+
+
+
+    for z in low_to_highcarb_stopwords:
+        if z == ',':
+            pass
+        else:
+            for y in new_steps:
+                if z in y.lower():
+                    y = y.encode('utf-8')
+                    y = y.replace(carbsubstitutions[x], x)
+
+
+    for x in carbsubstitutions:
+        new_steps = [w.replace(carbsubstitutions[x], x) for w in new_steps]
+
+
+
+
+    new_title = new_title.encode('utf-8').lower()
+    for x in carbsubstitutions:
+         if x in new_title.lower():
+             new_title =new_title.replace(x, carbsubstitutions[x])
+
+    
+
+    transformed_recipe['ingredients'] = new_ingredients
+    transformed_recipe['steps'] = new_steps
+    transformed_recipe['title'] = new_title
+
+    print "high carb version:"
+    print_recipe(transformed_recipe)
 
 
 
@@ -493,7 +596,7 @@ def main():
                 for key in recipe_book:
                     print str(key) + " : " + recipe_book[key]['title']
                 choice = input("which recipe: ")
-                print "\noptions:\n1. pescatarian\n2. low fat\n3. high fat\n"
+                print "\noptions:\n1. pescatarian\n2. low fat\n3. high fat\n4. low carb\n5. high carb\n"
                 choice2 = input("which transform: ")
                 if (choice2 == 1):
                     pescatarian(recipe_book[choice])
@@ -501,6 +604,10 @@ def main():
                     high2lowfat(recipe_book[choice])
                 elif (choice2 == 3):
                     low2highfat(recipe_book[choice])
+                elif (choice2 == 4):
+                    lowcarb(recipe_book[choice])
+                elif (choice2 == 5):
+                    highcarb(recipe_book[choice])
                 else:
                     print "invalid choice"
             else:
