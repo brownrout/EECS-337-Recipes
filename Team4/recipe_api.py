@@ -330,22 +330,20 @@ def pescatarian(dct):
     transformed_recipe = dct.copy()
 
     choice = random.randint(0, 2)
-    changes = ""
 
+    # Substituting ingredients into steps
     new_list = transformed_recipe['steps']
-    #print new_list
-
     for value in pesc_substitutes:
         new_list = [w.replace(value, pesc_substitutes[value][choice]) for w in new_list]
-
     transformed_recipe['steps'] = new_list
-    
 
-    # for value in pesc_substitutes:
-    #     for step in transformed_recipe['steps']:
-    #         if value in step:
-    #             changes += "replacing " + value + " with " + pesc_substitutes[value][choice] + '\n'
-    #             step.replace(value, pesc_substitutes[value][choice])
+    # substituing ingredients into ingredient list
+    new_ingredients = transformed_recipe['ingredients']
+    subs = list(pesc_substitutes.keys())
+    for dct in new_ingredients:
+        if dct['name'] in subs:
+            dct['name'].replace(dct['name'], pesc_substitutes[dct['name']][choice])
+
 
     print "pescatarian version:"
     print_recipe(transformed_recipe)
