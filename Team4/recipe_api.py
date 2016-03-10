@@ -46,7 +46,8 @@ def autograder(url):
     get_methods(soup, results)
     get_tools(soup, results)
     get_steps(soup, results)
-    print_recipe(results)
+    # uncomment later
+    #print_recipe(results)
     return results
 
 def pre_parse():
@@ -228,7 +229,7 @@ def get_methods(soup, dct):
     
     title = soup.title.text
     title_string = tokenizer.tokenize(title)
-    dct["title"] = title[:-17]
+    dct["title"] = title[:-17].lower()
 
     directions_string = get_directions(soup)
     #print directions_string
@@ -313,6 +314,29 @@ def print_recipe(dct):
                     print str(index+1) + ". " + elem
             print '\n'
 
+def print_transform_recipe(dct):
+    for key in dct:
+        if key != 'steps':
+            if key != 'cooking tools' and key != 'cooking methods' and key != 'primary cooking method':
+                print key + ":\n"
+                if isinstance(dct[key], basestring):
+                    print dct[key]
+                elif isinstance(dct[key], list):
+                    for value in dct[key]:
+                        if isinstance(value, dict):
+                            for x in value:
+                                print x + ": " + str(value[x])
+                            print '\n'
+                        else:
+                            print value
+                print '\n'
+        else:
+            print key + ":\n"
+            for index, elem in enumerate(dct[key]):
+                if elem != "":
+                    print str(index+1) + ". " + elem
+            print '\n'
+
 def pescatarian(dct):
     pesc_substitutes = {
     #proof of conept, needs refining
@@ -341,12 +365,19 @@ def pescatarian(dct):
     new_ingredients = transformed_recipe['ingredients']
     subs = list(pesc_substitutes.keys())
     for dct in new_ingredients:
-        if dct['name'] in subs:
-            dct['name'].replace(dct['name'], pesc_substitutes[dct['name']][choice])
+        for word in dct['name'].split():
+            if word in subs:
+                dct['name'] = pesc_substitutes[word][choice]
+
+    new_title = transformed_recipe['title']
+    for word in transformed_recipe['title'].split():
+        if word in subs:
+            new_title = transformed_recipe['title'].replace(word,pesc_substitutes[word][choice])
+    transformed_recipe['title'] = new_title
 
 
     print "pescatarian version:"
-    print_recipe(transformed_recipe)
+    print_transform_recipe(transformed_recipe)
 
 def high2lowfat(dct):
 
@@ -428,7 +459,7 @@ def high2lowfat(dct):
     transformed_recipe['title'] = new_title.upper()
 
     print "low fat version:"
-    print_recipe(transformed_recipe)
+    print_transform_recipe(transformed_recipe)
 
 
 def low2highfat(dct):
@@ -494,7 +525,7 @@ def low2highfat(dct):
     transformed_recipe['title'] = new_title
 
     print "high fat version:"
-    print_recipe(transformed_recipe)
+    print_transform_recipe(transformed_recipe)
 
 def lowcarb(dct):
     transformed_recipe = dct.copy()
@@ -548,7 +579,7 @@ def lowcarb(dct):
     transformed_recipe['title'] = new_title
 
     print "low carb version:"
-    print_recipe(transformed_recipe)
+    print_transform_recipe(transformed_recipe)
 
 def highcarb(dct):
     transformed_recipe = dct.copy()
@@ -605,7 +636,7 @@ def highcarb(dct):
     transformed_recipe['title'] = new_title
 
     print "high carb version:"
-    print_recipe(transformed_recipe)
+    print_transform_recipe(transformed_recipe)
 
 
 
@@ -619,6 +650,7 @@ def main():
     global recipe_book
 
     while True:
+        recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/18866/canadian-bacon-macaroni-and-cheese/')
         print '\n'
         print "\noptions:\n1. enter recipe (via url)\n2. transform an existing recipe\n"
         user_input = input("choose a function: ")

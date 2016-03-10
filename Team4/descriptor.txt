@@ -15,3 +15,4 @@ red
 skim
 seasoned
 prepared
+half-drained
