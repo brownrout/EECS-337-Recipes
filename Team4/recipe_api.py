@@ -338,27 +338,24 @@ def print_transform_recipe(dct):
             print '\n'
 
 def pescatarian(dct,direction):
-    pesc_substitutes = {
-    #proof of conept, needs refining
-        'chicken':['tuna','tofu', 'salmon'],
-        'steak':['tuna','tofu', 'salmon'],
-        'beef':['tuna','tofu', 'salmon'],
-        'turkey':['tuna','tofu', 'salmon'],
-        'bacon':['tofu','tofu','tofu']
-    }
 
-    pesc_substitutes = {
-    #proof of conept, needs refining
-        'tuna':['chicken','steak', 'turkey'],
-        'steak':['tuna','tofu', 'salmon'],
-        'beef':['tuna','tofu', 'salmon'],
-        'turkey':['tuna','tofu', 'salmon'],
-        'bacon':['tofu','tofu','tofu']
-    }
+    if (direction == 1):
+        pesc_substitutes = {
+        #proof of conept, needs refining
+            'chicken':['tuna','tofu', 'salmon'],
+            'steak':['tuna','tofu', 'salmon'],
+            'beef':['tuna','tofu', 'salmon'],
+            'turkey':['tuna','tofu', 'salmon'],
+            'bacon':['tofu','tofu','tofu']
+        }
+    else:
+        pesc_substitutes = {
+        #proof of conept, needs refining
+            'tuna':['chicken','steak', 'turkey'],
+            'salmon':['chicken','steak', 'turkey'],
+            'tofu':['chicken','steak', 'turkey']
+        }
 
-    pesc_ingredients = {
-
-    }
 
     transformed_recipe = dct.copy()
 
@@ -671,17 +668,19 @@ def main():
                 for key in recipe_book:
                     print str(key) + " : " + recipe_book[key]['title']
                 choice = input("which recipe: ")
-                print "\noptions:\n1. pescatarian\n2. low fat\n3. high fat\n4. low carb\n5. high carb\n"
+                print "\noptions:\n1. to pescatarian\n2. from pescatarian\n3. low fat\n4. high fat\n5. low carb\n6. high carb\n"
                 choice2 = input("which transform: ")
                 if (choice2 == 1):
-                    pescatarian(recipe_book[choice])
+                    pescatarian(recipe_book[choice],1)
                 elif (choice2 == 2):
-                    high2lowfat(recipe_book[choice])
+                    pescatarian(recipe_book[choice],2)
                 elif (choice2 == 3):
-                    low2highfat(recipe_book[choice])
+                    high2lowfat(recipe_book[choice])
                 elif (choice2 == 4):
-                    lowcarb(recipe_book[choice])
+                    low2highfat(recipe_book[choice])
                 elif (choice2 == 5):
+                    lowcarb(recipe_book[choice])
+                elif (choice2 == 6):
                     highcarb(recipe_book[choice])
                 else:
                     print "invalid choice"
