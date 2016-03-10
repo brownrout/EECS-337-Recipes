@@ -363,6 +363,10 @@ def high2lowfat(dct):
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(z, '')
 
+            if z in y['descriptor'].lower():
+                y['descriptor'] = y['descriptor'].encode('utf-8')
+                y['descriptor'] = y['descriptor'].replace(z, low_to_high_stopwords[z])
+
     for x in substitutions:
         for y in new_ingredients:
             if y['name'] in ignorelist:
@@ -429,6 +433,9 @@ def low2highfat(dct):
             if z in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(z, low_to_high_stopwords[z])
+            if z in y['descriptor'].lower():
+                y['descriptor'] = y['descriptor'].encode('utf-8')
+                y['descriptor'] = y['descriptor'].replace(z, low_to_high_stopwords[z])
 
 
     for x in low_to_high_subs:

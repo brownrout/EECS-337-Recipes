@@ -50,7 +50,7 @@ low_to_high_subs = {
     'bread' : 'white bread'
 }
 
-low_to_high_stopwords = {"whole wheat": "", "wheat": "", "low-fat": "", "low fat": "", "healthy": "", "1%": "", '2%': "", ',': "", "canadian-style": "canadian"}
+low_to_high_stopwords = {"whole wheat": "", "wheat": "", "low-fat": "", "low fat": "", "healthy": "", "1%": "", '2%': "", ',': "", "canadian-style": "canadian", "extra-virgin": "", "extra virgin": ""}
 high_to_low_stopwords = ["whole", "full-fat", "1%", '2%', ',', 'with skin', "canadian-style", "canadian", "white", "softened"]
 
 
