@@ -365,7 +365,9 @@ def high2lowfat(dct):
 
     for x in substitutions:
         for y in new_ingredients:
-            if x in y['name'].lower():
+            if y['name'] in ignorelist:
+                pass
+            elif x in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(x, substitutions[x])
 
@@ -377,21 +379,30 @@ def high2lowfat(dct):
             for y in new_steps:
                 if z in y.lower():
                     new_steps = new_steps.remove(z)
+  
+
+    #for x in substitutions:
+        #new_steps = [w.replace(x, substitutions[x]) for w in new_steps]
 
 
     for x in substitutions:
-        new_steps = [w.replace(x, substitutions[x]) for w in new_steps]
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                print "detected"
+                new_steps[y] = new_steps[y].replace(x, substitutions[x])
+
 
     for x in method_substitutions:
         new_steps = [w.replace(x, method_substitutions[x]) for w in new_steps]
 
 
     new_title = new_title.encode('utf-8').lower()
-    print new_title
     for x in substitutions:
-         if x in new_title.lower():
-             new_title =new_title.replace(x, substitutions[x])
-             print new_title
+        for y in ignorelist:
+            if y in new_title:
+                pass
+            elif x in new_title.lower():
+                new_title =new_title.replace(x, substitutions[x])
 
     for x in method_substitutions:
         if x in new_title.lower():
@@ -404,6 +415,7 @@ def high2lowfat(dct):
 
     print "low fat version:"
     print_recipe(transformed_recipe)
+
 
 def low2highfat(dct):
 
@@ -421,7 +433,9 @@ def low2highfat(dct):
 
     for x in low_to_high_subs:
         for y in new_ingredients:
-            if x in y['name'].lower():
+            if y['name'] in ignorelist:
+                pass
+            elif x in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(x, low_to_high_subs[x])
 
@@ -441,7 +455,7 @@ def low2highfat(dct):
             for y in new_steps:
                 if z in y.lower():
                     y = y.encode('utf-8')
-                    y = y.replace(substitutions[x], x)
+                    y = y.replace(low_to_high_stopwords[z], z)
                     #print new_steps
 
 
@@ -550,7 +564,7 @@ def highcarb(dct):
             for y in new_steps:
                 if z in y.lower():
                     y = y.encode('utf-8')
-                    y = y.replace(carbsubstitutions[x], x)
+                    y = y.remove(z)
 
 
     for x in carbsubstitutions:

@@ -15,7 +15,8 @@ carbsubstitutions = {
 	'flour' : 'almond flour',
 	'pizza crust' : 'cauliflower crust',
 	'taco shells' : 'lettuce wraps',
-	'flour tortillas' : 'corn tortillas'
+	'flour tortillas' : 'corn tortillas',
+	'rice' : 'quinoa'
 
 
 
@@ -28,5 +29,5 @@ low_to_highcarb_subs = {
 }
 
 
-high_to_lowcarb_stopwords = ["whole", "wheat", "hamburger", ",", 'mashed', 'almond', 'white']
+high_to_lowcarb_stopwords = ["whole", "wheat", "hamburger", ",", 'mashed', 'almond']
 low_to_highcarb_stopwords = {"whole wheat", "wheat", ',' }
