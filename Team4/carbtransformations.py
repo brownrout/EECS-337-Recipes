@@ -1,6 +1,11 @@
+
 carbsubstitutions = {
+
+    'sliced bread': 'eggplant',
 	'bread':'wheat bread',
 	'pasta':'wheat pasta',
+    'sweet potatoes': 'zucchini',
+    'sweet potato': 'zucchini',
 	'linguine': 'whole wheat linguine',
 	'penne': 'whole wheat penne',
 	'fettuccine': 'whole wheat fettuccine',
@@ -8,6 +13,7 @@ carbsubstitutions = {
 	'bun' : 'portabello mushroom bun',
 	'potato chips' : 'kale',
 	'potato' : 'zucchini',
+    'chips': 'kale',
 	'potatoes' : 'zucchini',
 	'spaghetti' : 'spagetti squash',
 	'french fries': 'butternut squash fries',
@@ -15,8 +21,28 @@ carbsubstitutions = {
 	'flour' : 'almond flour',
 	'pizza crust' : 'cauliflower crust',
 	'taco shells' : 'lettuce wraps',
+    'taco shell' : 'lettuce wrap',
 	'flour tortillas' : 'corn tortillas',
-	'rice' : 'quinoa'
+    'flour tortilla' : 'corn tortilla',
+	'rice' : 'quinoa',
+    'cereal': 'oats',
+    'crackers': 'cucumber slices',
+    'beans': 'soy beans',
+    'milk': 'unsweetened almond milk',
+    'sugar': 'artificial sweetener',
+    'jam': 'fresh fruit',
+    'jelly': 'fresh fruit',
+    'candy': 'sugar-free candy',
+    'pasta sauce': 'almond pesto',
+    'sauce': 'almond pesto',
+    'hash browns': 'squash',
+    'noodles': 'zuchinni slices',
+    'macaroni': 'diced vegetables',
+    'bananas': 'strawberries',
+    'beets': 'carrots',
+    'chickpeas': 'soy beans',
+    'garbonzo beans': 'soy beans'
+
 
 
 
@@ -30,4 +56,4 @@ low_to_highcarb_subs = {
 
 
 high_to_lowcarb_stopwords = ["whole", "wheat", "hamburger", ",", 'mashed', 'almond']
-low_to_highcarb_stopwords = {"whole wheat", "wheat", ',' }
+low_to_highcarb_stopwords = {"whole wheat", "wheat", ',', 'kidney' }

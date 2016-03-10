@@ -383,17 +383,29 @@ def high2lowfat(dct):
             for y in new_steps:
                 if z in y.lower():
                     new_steps = new_steps.remove(z)
-  
 
-    #for x in substitutions:
-        #new_steps = [w.replace(x, substitutions[x]) for w in new_steps]
+    #replacements in steps
+    split_steps = []
+    for y in range(0, len(new_steps)):
+        split_steps.append(new_steps[y].split())
 
 
     for x in substitutions:
-        for y in range(0, len(new_steps)):
-            if x in new_steps[y]:
-                print "detected"
-                new_steps[y] = new_steps[y].replace(x, substitutions[x])
+        for y in range(0, len(split_steps)):
+            for z in range(0, len(split_steps[y])):
+                if x == split_steps[y][z]:
+                    split_steps[y][z] = split_steps[y][z].replace(x, substitutions[x])
+                if x + ',' == split_steps[y][z]:
+                    split_steps[y][z] = split_steps[y][z].replace(x, substitutions[x])
+                if x + '.' == split_steps[y][z]:
+                    split_steps[y][z] = split_steps[y][z].replace(x, substitutions[x])
+
+    for y in range(0, len(split_steps)):
+        split_steps[y] = " ".join(split_steps[y])
+    
+    new_steps = split_steps
+  
+
 
 
     for x in method_substitutions:
