@@ -46,7 +46,7 @@ def autograder(url):
     get_methods(soup, results)
     get_tools(soup, results)
     get_steps(soup, results)
-    #print results
+    print_recipe(results)
     return results
 
 def pre_parse():
@@ -597,15 +597,10 @@ def highcarb(dct):
     for x in carbsubstitutions:
         new_steps = [w.replace(carbsubstitutions[x], x) for w in new_steps]
 
-
-
-
     new_title = new_title.encode('utf-8').lower()
     for x in carbsubstitutions:
          if x in new_title.lower():
              new_title =new_title.replace(x, carbsubstitutions[x])
-
-    
 
     transformed_recipe['ingredients'] = new_ingredients
     transformed_recipe['steps'] = new_steps
@@ -613,7 +608,6 @@ def highcarb(dct):
 
     print "high carb version:"
     print_recipe(transformed_recipe)
-
 
 
 
