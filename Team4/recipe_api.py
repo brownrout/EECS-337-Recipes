@@ -390,12 +390,13 @@ def high2lowfat(dct):
     print new_title
     for x in substitutions:
          if x in new_title.lower():
-             print "detected"
-             print x
              new_title =new_title.replace(x, substitutions[x])
              print new_title
 
-    
+    for x in method_substitutions:
+        if x in new_title.lower():
+            new_title =new_title.replace(x, method_substitutions[x])
+            print new_title
 
     transformed_recipe['ingredients'] = new_ingredients
     transformed_recipe['steps'] = new_steps
