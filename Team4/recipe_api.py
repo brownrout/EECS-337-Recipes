@@ -337,10 +337,19 @@ def print_transform_recipe(dct):
                     print str(index+1) + ". " + elem
             print '\n'
 
-def pescatarian(dct):
+def pescatarian(dct,direction):
     pesc_substitutes = {
     #proof of conept, needs refining
         'chicken':['tuna','tofu', 'salmon'],
+        'steak':['tuna','tofu', 'salmon'],
+        'beef':['tuna','tofu', 'salmon'],
+        'turkey':['tuna','tofu', 'salmon'],
+        'bacon':['tofu','tofu','tofu']
+    }
+
+    pesc_substitutes = {
+    #proof of conept, needs refining
+        'tuna':['chicken','steak', 'turkey'],
         'steak':['tuna','tofu', 'salmon'],
         'beef':['tuna','tofu', 'salmon'],
         'turkey':['tuna','tofu', 'salmon'],
@@ -648,9 +657,9 @@ def main():
     # http://allrecipes.com/recipe/18866/canadian-bacon-macaroni-and-cheese/
 
     global recipe_book
+    recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/18866/canadian-bacon-macaroni-and-cheese/')
 
     while True:
-        recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/18866/canadian-bacon-macaroni-and-cheese/')
         print '\n'
         print "\noptions:\n1. enter recipe (via url)\n2. transform an existing recipe\n"
         user_input = input("choose a function: ")
