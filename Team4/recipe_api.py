@@ -337,10 +337,11 @@ def print_transform_recipe(dct):
                     print str(index+1) + ". " + elem
             print '\n'
 
-def pescatarian(dct,direction):
 
-    if (direction == 1):
-        pesc_substitutes = {
+def transform(dct,transType):
+
+    if (transType == 1):
+        substitutes = {
         #proof of conept, needs refining
             'chicken':['tuna','tofu', 'salmon'],
             'steak':['tuna','tofu', 'salmon'],
@@ -348,12 +349,29 @@ def pescatarian(dct,direction):
             'turkey':['tuna','tofu', 'salmon'],
             'bacon':['tofu','tofu','tofu']
         }
-    else:
-        pesc_substitutes = {
+    elif (transType == 2):
+        substitutes = {
         #proof of conept, needs refining
             'tuna':['chicken','steak', 'turkey'],
             'salmon':['chicken','steak', 'turkey'],
             'tofu':['chicken','steak', 'turkey']
+        }
+    elif (transType == 3):
+        substitutes = {
+        #proof of conept, needs refining
+            'chicken':['tofu', 'tofu','tofu'],
+            'steak':['tofu', 'tofu','tofu'],
+            'beef':['tofu', 'tofu','tofu'],
+            'turkey':['tofu', 'tofu','tofu'],
+            'bacon':['tofu', 'tofu','tofu'],
+            'tuna':['tofu', 'tofu','tofu'],
+            'salmon':['tofu', 'tofu','tofu'],
+            'tofu':['tofu', 'tofu','tofu']
+        }
+    else:
+        substitutes = {
+        #proof of conept, needs refining
+            'tofu':['chicken','steak','tuna']
         }
 
 
@@ -363,26 +381,24 @@ def pescatarian(dct,direction):
 
     # Substituting ingredients into steps
     new_list = transformed_recipe['steps']
-    for value in pesc_substitutes:
-        new_list = [w.replace(value, pesc_substitutes[value][choice]) for w in new_list]
+    for value in substitutes:
+        new_list = [w.replace(value, substitutes[value][choice]) for w in new_list]
     transformed_recipe['steps'] = new_list
 
     # substituing ingredients into ingredient list
     new_ingredients = transformed_recipe['ingredients']
-    subs = list(pesc_substitutes.keys())
+    subs = list(substitutes.keys())
     for dct in new_ingredients:
         for word in dct['name'].split():
             if word in subs:
-                dct['name'] = pesc_substitutes[word][choice]
+                dct['name'] = substitutes[word][choice]
 
     new_title = transformed_recipe['title']
     for word in transformed_recipe['title'].split():
         if word in subs:
-            new_title = transformed_recipe['title'].replace(word,pesc_substitutes[word][choice])
+            new_title = transformed_recipe['title'].replace(word,substitutes[word][choice])
     transformed_recipe['title'] = new_title
 
-
-    print "pescatarian version:"
     print_transform_recipe(transformed_recipe)
 
 def high2lowfat(dct):
@@ -668,12 +684,12 @@ def main():
                 for key in recipe_book:
                     print str(key) + " : " + recipe_book[key]['title']
                 choice = input("which recipe: ")
-                print "\noptions:\n1. to pescatarian\n2. from pescatarian\n3. low fat\n4. high fat\n5. low carb\n6. high carb\n"
+                print "\noptions:\n1. to pescatarian\n2. from pescatarian\n3. low fat\n4. high fat\n5. low carb\n6. high carb\n7. to vegetarian\n8. from vegetarian\n"
                 choice2 = input("which transform: ")
                 if (choice2 == 1):
-                    pescatarian(recipe_book[choice],1)
+                    transform(recipe_book[choice],1)
                 elif (choice2 == 2):
-                    pescatarian(recipe_book[choice],2)
+                    transform(recipe_book[choice],2)
                 elif (choice2 == 3):
                     high2lowfat(recipe_book[choice])
                 elif (choice2 == 4):
@@ -682,6 +698,10 @@ def main():
                     lowcarb(recipe_book[choice])
                 elif (choice2 == 6):
                     highcarb(recipe_book[choice])
+                elif (choice2 == 7):
+                    transform(recipe_book[choice],3)
+                elif (choice2 == 8):
+                    transform(recipe_book[choice],4)
                 else:
                     print "invalid choice"
             else:
@@ -690,11 +710,7 @@ def main():
         else:
             print "invalid choice\n"
 
-    #print_recipe(answers)
     print '\n'
-    #pescatarian(answers)
-
-
     return
 
 
