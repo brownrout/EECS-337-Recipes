@@ -498,6 +498,10 @@ def lowcarb(dct):
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(z, '')
 
+            if z in y['descriptor'].lower():
+                y['descriptor'] = y['descriptor'].encode('utf-8')
+                y['descriptor'] = y['descriptor'].replace(z, '')
+
     for x in carbsubstitutions:
         for y in new_ingredients:
             if x in y['name'].lower():
@@ -547,6 +551,10 @@ def highcarb(dct):
             if z in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(z, '')
+
+            if z in y['descriptor'].lower():
+                y['descriptor'] = y['descriptor'].encode('utf-8')
+                y['descriptor'] = y['descriptor'].replace(z, '')
 
 
     for x in low_to_highcarb_subs:
