@@ -70,7 +70,7 @@ def autograder(url):
     get_tools(soup, results)
     get_steps(soup, results)
     # uncomment later
-    #print_recipe(results)
+    print_recipe(results)
     return results
 
 def pre_parse():
@@ -599,13 +599,13 @@ def lowcarb(dct):
                 y['name'] = y['name'].replace(x, carbsubstitutions[x])
 
 
-    for z in high_to_lowcarb_stopwords:
-        if z == ',':
-            pass
-        else:
-            for y in new_steps:
-                if z in y.lower():
-                    new_steps = new_steps.remove(z)
+    # for z in high_to_lowcarb_stopwords:
+    #     if z == ',':
+    #         pass
+    #     else:
+    #         for y in new_steps:
+    #             if z in y.lower():
+    #                 new_steps = new_steps.remove(z)
 
 
     for x in carbsubstitutions:
@@ -698,6 +698,9 @@ def main():
 
     global recipe_book
     recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/18866/canadian-bacon-macaroni-and-cheese/')
+    recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/219769/dirty-alfredo/?internalSource=search%20result&referringContentType=search%20results')
+    recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/23788/bacon-quiche-tarts/?internalSource=staff%20pick&referringId=669&referringContentType=recipe%20hub')
+    recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/69446/pesto-pasta-with-green-beans-and-potatoes/?internalSource=search%20result&referringContentType=search%20results')
 
     while True:
         print '\n'
