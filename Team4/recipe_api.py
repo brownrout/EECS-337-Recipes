@@ -32,6 +32,29 @@ preparations = []
 
 decrement_check = {"mixing bowl": "mix", "baking pan": "bake", "baking soda": "bake", "baking powder":"bake"}
 
+#move elsewhere later
+tool_verb_map = {
+  'chop':'knife',
+  'stir':'wooden spoon',
+  'beat':'fork',
+  'cream':'hand mixer',
+  'dice':'knife',
+  'drizzle':'spoon',
+  'fold':'wooden spoon',
+  'glaze':'spoon',
+  'julienne':'knife',
+  'marinate':'bowl',
+  'mince':'knife',
+  'shred':'food processor',
+  'sift':'colander',
+  'slice':'knife',
+  'peel':'peeler',
+  'puree':'blender',
+  'grate':'grater',
+  'crush':'pestle mortar',
+  'whisk':'whisk'
+}
+
 def autograder(url):
     '''Accepts the URL for a recipe, and returns a dictionary of the
     parsed results in the correct format. See project sheet for
@@ -89,7 +112,7 @@ def pre_parse():
 def get_ingredients(soup, dct):
     dct["ingredients"] = []
     letters = soup.find_all("span", itemprop="ingredients")
-    
+
     for element in letters:
         quantity, measurement, name, descriptor, preparation = parse_ingredient(element.get_text().lower())
         d = {
@@ -104,22 +127,22 @@ def get_ingredients(soup, dct):
 
     #for x in ingredients:
     #    print x
-    
+
     # for x in dct['ingredients']:
     #     for k,v in x.items():
     #         print k + " : " + v
 
 def parse_ingredient(ingredient):
-    
+
     quantity = ''
     name = ''
-    measurement = '' 
+    measurement = ''
     descriptor = ''
     preparation = ''
 
     global equivalents
     synonyms = []
-    
+
     global units
     global descriptors
 
@@ -127,7 +150,7 @@ def parse_ingredient(ingredient):
         synonyms.append(key)
 
     ingLst = ingredient.split()
-    for word in ingLst: 
+    for word in ingLst:
         if word in synonyms:
             word = equivalents[word]
         if word[0].isnumeric():
@@ -142,7 +165,7 @@ def parse_ingredient(ingredient):
         elif word in preparations:
             preparation = word
             continue
-    
+
     if measurement in ingLst:
         ingLst.remove(measurement)
     if quantity in ingLst:
@@ -217,6 +240,9 @@ def get_tools(soup, dct):
                 cnt[tool] += 1
             elif tool == one_word_tool and tool not in used_list:
                 cnt[tool] +=1
+        for verb, tool in tool_verb_map:
+            if directions_list[x] == verb and tool not in cnt:
+                cnt[tool] +=1
 
     for x in cnt.most_common():
         dct["cooking tools"].append(x[0])
@@ -226,7 +252,7 @@ def get_methods(soup, dct):
     tokenizer = RegexpTokenizer(r'\w+')
     dct["cooking methods"] = []
     dct["primary cooking method"] = " "
-    
+
     title = soup.title.text
     title_string = tokenizer.tokenize(title)
     dct["title"] = title[:-17].lower()
@@ -280,7 +306,7 @@ def get_methods(soup, dct):
     if flag:
         max_list = []
         max_cnt = cnt.most_common(1)[0][1]
-        
+
         for x,v in cnt.most_common():
             if v== max_cnt:
                 max_list.append(x)
@@ -453,9 +479,9 @@ def high2lowfat(dct):
 
     for y in range(0, len(split_steps)):
         split_steps[y] = " ".join(split_steps[y])
-    
+
     new_steps = split_steps
-  
+
 
 
 
@@ -540,7 +566,7 @@ def low2highfat(dct):
          if x in new_title.lower():
              new_title =new_title.replace(x, substitutions[x])
 
-    
+
 
     transformed_recipe['ingredients'] = new_ingredients
     transformed_recipe['steps'] = new_steps
@@ -587,13 +613,13 @@ def lowcarb(dct):
 
 
     new_title = new_title.encode('utf-8').lower()
-   
+
     for x in carbsubstitutions:
          if x in new_title.lower():
              new_title =new_title.replace(x, carbsubstitutions[x])
 
     new_title = new_title + "(low carb)"
-    
+
 
 
     transformed_recipe['ingredients'] = new_ingredients
