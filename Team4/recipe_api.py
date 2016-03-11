@@ -240,7 +240,8 @@ def get_tools(soup, dct):
                 cnt[tool] += 1
             elif tool == one_word_tool and tool not in used_list:
                 cnt[tool] +=1
-        for verb, tool in tool_verb_map:
+        for verb in tool_verb_map:
+            tool = tool_verb_map[verb]
             if directions_list[x] == verb and tool not in cnt:
                 cnt[tool] +=1
 
