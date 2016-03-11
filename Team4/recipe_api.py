@@ -373,8 +373,9 @@ def transform(dct,transType):
             'chicken':['tuna','tofu', 'salmon'],
             'steak':['tuna','tofu', 'salmon'],
             'beef':['tuna','tofu', 'salmon'],
-            'turkey':['tuna','tofu', 'salmon'],
-            'bacon':['tofu','tofu','tofu']
+            'turkey':['tofurkey','tofurkey', 'tofurkey'],
+            'bacon':['anchovies','anchovies','anchovies']
+
         }
     elif (transType == 2):
         substitutes = {
