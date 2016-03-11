@@ -697,10 +697,10 @@ def main():
     # http://allrecipes.com/recipe/18866/canadian-bacon-macaroni-and-cheese/
 
     global recipe_book
-    recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/18866/canadian-bacon-macaroni-and-cheese/')
-    recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/219769/dirty-alfredo/?internalSource=search%20result&referringContentType=search%20results')
-    recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/23788/bacon-quiche-tarts/?internalSource=staff%20pick&referringId=669&referringContentType=recipe%20hub')
-    recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/69446/pesto-pasta-with-green-beans-and-potatoes/?internalSource=search%20result&referringContentType=search%20results')
+    #recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/18866/canadian-bacon-macaroni-and-cheese/')
+    #recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/219769/dirty-alfredo/?internalSource=search%20result&referringContentType=search%20results')
+    #recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/23788/bacon-quiche-tarts/?internalSource=staff%20pick&referringId=669&referringContentType=recipe%20hub')
+    #recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/69446/pesto-pasta-with-green-beans-and-potatoes/?internalSource=search%20result&referringContentType=search%20results')
 
     while True:
         print '\n'

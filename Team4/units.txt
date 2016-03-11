@@ -23,3 +23,5 @@ tablespoons
 bushel
 bushels
 slices
+halves
+halved

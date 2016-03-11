@@ -1,3 +1,6 @@
 chopped
 minced
 shredded
+crushed
+grated
+ground
