@@ -30,7 +30,7 @@
         {
             "name": ["garlic salt", "salt"],
             "quantity": [0.5],
-            "measurement": ["teaspoon"],
+            "measurement": ["teaspoon", "teaspoons"],
             "descriptor": ["garlic"],
             "preparation": [],
             "prep-description": [],
@@ -73,18 +73,18 @@
             "max": 4
         },
         {
-            "name": ["Worchestershire sauce", "sauce"],
+            "name": ["sauce", "Worcestershire sauce", "worcestershire sauce"],
             "quantity": [1.5],
             "measurement": ["tablespoon", "tablespoons"],
-            "descriptor": ["Worchestershire"],
+            "descriptor": ["Worcestershire", "worcestershire"],
             "preparation": [],
             "prep-description": [],
             "max": 4
         },
         {
             "name": ["milk", "skim milk"],
-            "quantity": [0.333],
-            "measurement": ["cup"],
+            "quantity": [0.333, 0.33, 0.3333],
+            "measurement": ["cup", "cups"],
             "descriptor": ["skim"],
             "preparation": [],
             "prep-description": [],
