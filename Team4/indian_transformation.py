@@ -1,6 +1,9 @@
 
 spicy_list = {
-    'jalapeno' ; [],
+    'jalapeno' : ['red chili pepper', 'green chili pepper', 'chili powder'],
+    'wasabi': ['red chili pepper', 'green chili pepper', 'chili powder'],
+
+
 
 
 }
@@ -11,9 +14,8 @@ indian_spices = {
     'cumin',
     'curry powder',
     'chaat masala',
-    'methi seeds',
     'garam masala',
-    'chilli powder',
+    'chili powder',
     'saffron',
     'cardamon',
     'clove',
@@ -21,5 +23,10 @@ indian_spices = {
     'fenugreek seeds',
     'carom seeds',
     'fennel seeds',
+    'ginger',
+    'cilantro',
+    'black salt',
+    'mace',
+    'tulsi herb'
 
 }

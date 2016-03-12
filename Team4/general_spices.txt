@@ -34,3 +34,40 @@ dill
 paprika
 adobo seasoning
 jerk spice
+italian seasoning
+lavendar
+achiote powder
+achiote paste
+caraway seed
+cayenne pepper
+chia seeds
+gochugaru
+grains of paradise
+kaffir lime leaves
+loomi
+mahlab
+peppercorns
+sage
+star anise
+sumac
+chervil
+chive
+lovage
+marjoram
+pink pepper
+summer savory
+shiso
+tarragon
+baharat
+bebere
+bouquet garni
+dukkah
+herbes de provence 
+pickling spice
+ras el hanout
+shichimi togarashi
+za'atar seasoning blend 
+peppermint
+vanilla
+
+
