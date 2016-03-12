@@ -77,3 +77,20 @@ cheeses = {
 
 
 }
+
+sauce_list = {
+    'yogurt': 'dahi'
+    'gravy' : 'creamy spiced gravy'
+}
+
+indian_sauces = {
+    'coriander chutney',
+    'mint chutney',
+    'tomato puree',
+    'tamarind chutney',
+    'raita',
+    'kuzhambu',
+    'rasam',
+    'sambar',
+    'onion-tomato based gravy'
+}
