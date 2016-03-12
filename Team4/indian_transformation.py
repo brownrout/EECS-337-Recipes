@@ -30,3 +30,67 @@ indian_spices = {
     'tulsi herb'
 
 }
+
+cheeses = {
+    'mozzerella': 'paneer',
+    'cheddar' : 'paneer',
+    'anejo enchilado' :'paneer',
+    'asiago':'paneer',
+    'blue': 'paneer',
+    'cotija' : 'paneer',
+    'gruyere' : 'paneer',
+    'parmesan': 'paneer',
+    'romano' : 'paneer',
+    'gouda' : 'paneer',
+    'raclette': 'paneer',
+    'swiss': 'paneer',
+    'cheddar' : 'paneer',
+    'chevres' : 'paneer',
+    'edam' : 'paneer',
+    'monterey jack': 'paneer',
+    'provolone' : 'paneer',
+    'butterkase' : 'paneer',
+    'colby': 'paneer',
+    'fontina val daosta':'paneer',
+    'havarti': 'paneer',
+    'brie' : 'paneer',
+    'camembert de normandie' :'paneer',
+    'gorgonzola' : 'paneer',
+    'limburger' : 'paneer',
+    'feta': 'paneer',
+    'munster' : 'paneer',
+    'neufchatel' : 'paneer',
+    'queso' : 'paneer',
+    'burrata' : 'paneer',
+    'curd' : 'paneer',
+    'chechil' : 'paneer',
+    'chura kampo' : 'paneer',
+    'american cheese' : 'paneer',
+    'roquefort': 'paneer',
+    'camembert': 'paneer',
+    'cotija': 'paneer',
+    'chevre': 'paneer',
+    'emmental': 'paneer',
+    'taleggio': 'paneer',
+    'parmigiano-reggiano': 'paneer',
+    'manchego': 'paneer'
+
+
+}
+
+sauce_list = {
+    'yogurt': 'dahi'
+    'gravy' : 'creamy spiced gravy'
+}
+
+indian_sauces = {
+    'coriander chutney',
+    'mint chutney',
+    'tomato puree',
+    'tamarind chutney',
+    'raita',
+    'kuzhambu',
+    'rasam',
+    'sambar',
+    'onion-tomato based gravy'
+}
