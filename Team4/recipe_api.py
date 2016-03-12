@@ -370,42 +370,97 @@ def transform(dct,transType):
     if (transType == 1):
         substitutes = {
         #proof of conept, needs refining
-            'chicken':['tuna','tofu', 'salmon'],
-            'steak':['tuna','tofu', 'salmon'],
-            'beef':['tuna','tofu', 'salmon'],
-            'turkey':['tofurkey','tofurkey', 'tofurkey'],
-            'bacon':['anchovies','anchovies','anchovies']
-
-        }
+            'chicken':['tilapia','salmon'],
+            'steak':['lobster', 'swordfish'],
+            'beef':['tuna','salmon'],
+            'turkey':['tuna', 'salmon'],
+            'bacon':['anchovies', 'fried squid'],
+            'lamb': ['crab', 'grouper'],
+            'sausage': ['shrimp', 'eel'],
+            'pork': ['shrimp', 'scallop'],
+            'ham': ['salmon', 'shrimp'],
+            'tofu': ['tilapia', 'cod']
+    }
     elif (transType == 2):
         substitutes = {
-        #proof of conept, needs refining
-            'tuna':['chicken','steak', 'turkey'],
-            'salmon':['chicken','steak', 'turkey'],
-            'tofu':['chicken','steak', 'turkey']
-        }
+            #proof of conept, needs refining
+            'tuna':['beef', 'turkey'],
+            'salmon':['chicken', 'steak'],
+            'tofu':['chicken', 'ham'],
+            'tilapia': ['chicken', 'chicken'],
+            'lobster': ['steak', 'chicken'],
+            'crab' : ['chicken', 'lamb'],
+            'grouper': ['lamb', 'beef'],
+            'shrimp' : ['sausage', 'pork'],
+            'cod' : ['chicken', 'ham'],
+            'scallop': ['bacon', 'pork'],
+            'eel' : ['pork', 'pork'],
+            'anchovies' : ['bacon', 'fried pork'],
+            'calamari' : ['bacon', 'ham'],
+            'squid' : ['bacon', 'fried pork'],
+            'octopus' : ['bacon', 'pork'],
+            'tuna': ['chicken', 'beef'],
+            'swordfish': ['steak', 'chicken'],
+            'oyster': ['bacon', 'pork'],
+            'crawfish': ['sausage', 'pork'],
+            'bass' : ['chicken', 'turkey']
+
+    }
     elif (transType == 3):
         substitutes = {
         #proof of conept, needs refining
-            'chicken':['tofu', 'tofu','tofu'],
-            'steak':['tofu', 'tofu','tofu'],
-            'beef':['tofu', 'tofu','tofu'],
-            'turkey':['tofu', 'tofu','tofu'],
-            'bacon':['tofu', 'tofu','tofu'],
-            'tuna':['tofu', 'tofu','tofu'],
-            'salmon':['tofu', 'tofu','tofu'],
-            'tofu':['tofu', 'tofu','tofu']
-        }
+            'chicken':['tofu', 'tempeh'],
+            'steak':['seitan','portobello mushrooms'],
+            'beef':['tempeh','seitan'],
+            'turkey':['tofurky', 'seitan turkey'],
+            'bacon':['crispy fried shallots', 'tempeh bacon'],
+            'lamb': ['seitan', 'shitake mushrooms'],
+            'sausage': ['Boca Italian meatless sausage', 'Gardenburger chunks'],
+            'pork': ['tempeh', 'tofu'],
+            'ham': ['tofu', 'tofurky'],
+            'tuna':['chickpeas', 'tempeh'],
+            'salmon':['fishless filet', 'walnut burgers'],
+            'tofu':['tofu','eggplant'],
+            'burger': ['portobello mushrooms', 'veggie-burger'],
+            'tilapia': ['tofu', 'tempeh'],
+            'crab' : ['heart of palm chunks', 'mushrooms'],
+            'grouper': ['lentils', 'firm tofu'],
+            'shrimp': ['seitan', 'fried shallots'],
+            'cod': ['eggplant', 'tofu'],
+            'scallop': ['bok choy', 'chickpea cakes'],
+            'eel': ['seaweed', 'asparagus'],
+            'anchovies': ['olives', 'capers'],
+            'calamari': ['breaded eggplant', 'breaded zucchini'],
+            'squid': ['eggplant', 'zucchini'],
+            'octopus': ['eggplant', 'zucchini'],
+            'swordfish': ['tofu', 'portobello mushrooms'],
+            'oyster': ['bok choy', 'chickpea cakes'],
+            'crawfish': ['tofu', 'eggplant'],
+            'bass' : ['tofu', 'tempeh']
+    }
     else:
         substitutes = {
-        #proof of conept, needs refining
-            'tofu':['chicken','steak','tuna']
-        }
+            #proof of conept, needs refining
+            'tofu':['chicken','tilapia'],
+            'eggplant':  ['cod', 'chicken'],
+            'portobello mushroom': ['burger', 'swordfish'],
+            'zuchinni' : ['shrimp', 'chicken'],
+            'tempeh': ['chicken', 'bass'],
+            'seitan': ['chicken','salmon'],
+            'bok choy': ['squid', 'octopus'],
+            'chickpea': ['scallop', 'chicken'],
+            'mushroom': ['chicken', 'squid'],
+            'squash': ['shrimp', 'chicken'],
+            'bean': ['chicken', 'grouper'],
+            'asparagus': ['shrimp', 'chicken'],
+            'potato' : ['chicken', 'cod']
+
+}
 
 
     transformed_recipe = dct.copy()
 
-    choice = random.randint(0, 2)
+    choice = random.randint(0, 1)
 
     # Substituting ingredients into steps
     new_list = transformed_recipe['steps']
