@@ -484,7 +484,17 @@ def transform(dct,transType):
     for word in transformed_recipe['title'].split():
         if word in subs:
             new_title = transformed_recipe['title'].replace(word,substitutes[word][choice])
+    
     transformed_recipe['title'] = new_title.lower()
+
+    if (transType == 1):
+        transformed_recipe['title'] += " (pescatarian)"
+    elif (transType == 2):
+        transformed_recipe['title'] += " (non pescatarian)"
+    elif (transType == 3):
+        transformed_recipe['title'] += " (vegetarian)"
+    elif (transType == 4):
+        transformed_recipe['title'] += " (non vegetarian)"
 
     print_transform_recipe(transformed_recipe)
     return transformed_recipe
@@ -566,7 +576,7 @@ def high2lowfat(dct):
 
     transformed_recipe['ingredients'] = new_ingredients
     transformed_recipe['steps'] = new_steps
-    transformed_recipe['title'] = new_title.lower()
+    transformed_recipe['title'] = new_title.lower() + " (low fat)"
 
     print "low fat version:"
     print_transform_recipe(transformed_recipe)
@@ -633,7 +643,7 @@ def low2highfat(dct):
 
     transformed_recipe['ingredients'] = new_ingredients
     transformed_recipe['steps'] = new_steps
-    transformed_recipe['title'] = new_title.lower()
+    transformed_recipe['title'] = new_title.lower() + " (high fat)"
 
     print "high fat version:"
     print_transform_recipe(transformed_recipe)
@@ -682,13 +692,13 @@ def lowcarb(dct):
          if x in new_title.lower():
              new_title =new_title.replace(x, carbsubstitutions[x])
 
-    new_title = new_title + "(low carb)"
+    new_title = new_title
 
 
 
     transformed_recipe['ingredients'] = new_ingredients
     transformed_recipe['steps'] = new_steps
-    transformed_recipe['title'] = new_title
+    transformed_recipe['title'] = new_title.lower() + " (low carb)"
 
     print "low carb version:"
     print_transform_recipe(transformed_recipe)
@@ -746,7 +756,7 @@ def highcarb(dct):
 
     transformed_recipe['ingredients'] = new_ingredients
     transformed_recipe['steps'] = new_steps
-    transformed_recipe['title'] = new_title.lower()
+    transformed_recipe['title'] = new_title.lower() + " (high carb)"
 
     print "high carb version:"
     print_transform_recipe(transformed_recipe)
