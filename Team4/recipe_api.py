@@ -116,11 +116,11 @@ def get_ingredients(soup, dct):
     for element in letters:
         quantity, measurement, name, descriptor, preparation = parse_ingredient(element.get_text().lower())
         d = {
-          'name': name,
+          'name': name.encode("utf-8"),
           'quantity':quantity,
-          'measurement':measurement,
-          'descriptor': descriptor,
-          'preparation':  preparation,
+          'measurement':measurement.encode("utf-8"),
+          'descriptor': descriptor.encode("utf-8"),
+          'preparation':  preparation.encode("utf-8"),
           'prep-description': "none"
         }
         dct["ingredients"].append(d)
