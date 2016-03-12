@@ -8,6 +8,7 @@ import random
 from fat_transformations import *
 from carbtransformations import *
 import re
+from copy import deepcopy
 
 results = {}
 recipe_book = {}
@@ -116,11 +117,11 @@ def get_ingredients(soup, dct):
     for element in letters:
         quantity, measurement, name, descriptor, preparation = parse_ingredient(element.get_text().lower())
         d = {
-          'name': name.encode("utf-8"),
+          'name': name,
           'quantity':quantity,
-          'measurement':measurement.encode("utf-8"),
-          'descriptor': descriptor.encode("utf-8"),
-          'preparation':  preparation.encode("utf-8"),
+          'measurement':measurement,
+          'descriptor': descriptor,
+          'preparation':  preparation,
           'prep-description': "none"
         }
         dct["ingredients"].append(d)
@@ -291,18 +292,17 @@ def get_methods(soup, dct):
 
 
     flag = True
-    if flag:
-        for x in title_string:
-            for y in methods:
-                if y == x.lower():
-                    dct["primary cooking method"] = y
-                    flag = False
-                elif y + "ed" == x.lower():
-                    dct["primary cooking method"] = y
-                    flag = False
-                elif y + "d" == x.lower():
-                    dct["primary cooking method"] = y
-                    flag = False
+    for x in title_string:
+        for y in methods:
+            if y == x.lower():
+                dct["primary cooking method"] = y
+                flag = False
+            elif y + "ed" == x.lower():
+                dct["primary cooking method"] = y
+                flag = False
+            elif y + "d" == x.lower():
+                dct["primary cooking method"] = y
+                flag = False
 
     if flag:
         max_list = []
@@ -368,6 +368,7 @@ def print_transform_recipe(dct):
 def transform(dct,transType):
 
     if (transType == 1):
+        # to pescatarian
         substitutes = {
         #proof of conept, needs refining
             'chicken':['tilapia','salmon'],
@@ -382,6 +383,7 @@ def transform(dct,transType):
             'tofu': ['tilapia', 'cod']
     }
     elif (transType == 2):
+        # from pescatarian
         substitutes = {
             #proof of conept, needs refining
             'tuna':['beef', 'turkey'],
@@ -407,6 +409,7 @@ def transform(dct,transType):
 
     }
     elif (transType == 3):
+        # to vegetarian
         substitutes = {
         #proof of conept, needs refining
             'chicken':['tofu', 'tempeh'],
@@ -439,6 +442,7 @@ def transform(dct,transType):
             'bass' : ['tofu', 'tempeh']
     }
     else:
+        # from vegetarian
         substitutes = {
             #proof of conept, needs refining
             'tofu':['chicken','tilapia'],
@@ -458,7 +462,7 @@ def transform(dct,transType):
 }
 
 
-    transformed_recipe = dct.copy()
+    transformed_recipe = deepcopy(dct)
 
     choice = random.randint(0, 1)
 
@@ -480,13 +484,14 @@ def transform(dct,transType):
     for word in transformed_recipe['title'].split():
         if word in subs:
             new_title = transformed_recipe['title'].replace(word,substitutes[word][choice])
-    transformed_recipe['title'] = new_title
+    transformed_recipe['title'] = new_title.lower()
 
     print_transform_recipe(transformed_recipe)
+    return transformed_recipe
 
 def high2lowfat(dct):
 
-    transformed_recipe = dct.copy()
+    transformed_recipe = deepcopy(dct)
     new_ingredients = transformed_recipe['ingredients']
     new_steps = transformed_recipe['steps']
     new_title = transformed_recipe['title']
@@ -561,15 +566,16 @@ def high2lowfat(dct):
 
     transformed_recipe['ingredients'] = new_ingredients
     transformed_recipe['steps'] = new_steps
-    transformed_recipe['title'] = new_title.upper()
+    transformed_recipe['title'] = new_title.lower()
 
     print "low fat version:"
     print_transform_recipe(transformed_recipe)
+    return transformed_recipe
 
 
 def low2highfat(dct):
 
-    transformed_recipe = dct.copy()
+    transformed_recipe = deepcopy(dct)
     new_ingredients = transformed_recipe['ingredients']
     new_steps = transformed_recipe['steps']
     new_title = transformed_recipe['title']
@@ -627,13 +633,14 @@ def low2highfat(dct):
 
     transformed_recipe['ingredients'] = new_ingredients
     transformed_recipe['steps'] = new_steps
-    transformed_recipe['title'] = new_title
+    transformed_recipe['title'] = new_title.lower()
 
     print "high fat version:"
     print_transform_recipe(transformed_recipe)
+    return transformed_recipe
 
 def lowcarb(dct):
-    transformed_recipe = dct.copy()
+    transformed_recipe = deepcopy(dct)
     new_ingredients = transformed_recipe['ingredients']
     new_steps = transformed_recipe['steps']
     new_title = transformed_recipe['title']
@@ -685,9 +692,10 @@ def lowcarb(dct):
 
     print "low carb version:"
     print_transform_recipe(transformed_recipe)
+    return transformed_recipe
 
 def highcarb(dct):
-    transformed_recipe = dct.copy()
+    transformed_recipe = deepcopy(dct)
     new_ingredients = transformed_recipe['ingredients']
     new_steps = transformed_recipe['steps']
     new_title = transformed_recipe['title']
@@ -738,10 +746,11 @@ def highcarb(dct):
 
     transformed_recipe['ingredients'] = new_ingredients
     transformed_recipe['steps'] = new_steps
-    transformed_recipe['title'] = new_title
+    transformed_recipe['title'] = new_title.lower()
 
     print "high carb version:"
     print_transform_recipe(transformed_recipe)
+    return transformed_recipe
 
 
 
@@ -758,6 +767,8 @@ def main():
     #recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/23788/bacon-quiche-tarts/?internalSource=staff%20pick&referringId=669&referringContentType=recipe%20hub')
     #recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/69446/pesto-pasta-with-green-beans-and-potatoes/?internalSource=search%20result&referringContentType=search%20results')
 
+    recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/18866/canadian-bacon-macaroni-and-cheese/')
+    
     while True:
         print '\n'
         print "\noptions:\n1. enter recipe (via url)\n2. transform an existing recipe\n"
@@ -773,21 +784,21 @@ def main():
                 print "\noptions:\n1. to pescatarian\n2. from pescatarian\n3. low fat\n4. high fat\n5. low carb\n6. high carb\n7. to vegetarian\n8. from vegetarian\n"
                 choice2 = input("which transform: ")
                 if (choice2 == 1):
-                    transform(recipe_book[choice],1)
+                    recipe_book[len(recipe_book.keys())] = transform(recipe_book[choice],1)
                 elif (choice2 == 2):
-                    transform(recipe_book[choice],2)
+                    recipe_book[len(recipe_book.keys())] = transform(recipe_book[choice],2)
                 elif (choice2 == 3):
-                    high2lowfat(recipe_book[choice])
+                    recipe_book[len(recipe_book.keys())] = high2lowfat(recipe_book[choice])
                 elif (choice2 == 4):
-                    low2highfat(recipe_book[choice])
+                    recipe_book[len(recipe_book.keys())] = low2highfat(recipe_book[choice])
                 elif (choice2 == 5):
-                    lowcarb(recipe_book[choice])
+                    recipe_book[len(recipe_book.keys())] = lowcarb(recipe_book[choice])
                 elif (choice2 == 6):
-                    highcarb(recipe_book[choice])
+                    recipe_book[len(recipe_book.keys())] = highcarb(recipe_book[choice])
                 elif (choice2 == 7):
-                    transform(recipe_book[choice],3)
+                    recipe_book[len(recipe_book.keys())] = transform(recipe_book[choice],3)
                 elif (choice2 == 8):
-                    transform(recipe_book[choice],4)
+                    recipe_book[len(recipe_book.keys())] = transform(recipe_book[choice],4)
                 else:
                     print "invalid choice"
             else:
