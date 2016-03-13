@@ -1,14 +1,15 @@
 
+
 spicy_list = {
-    'jalapeno' : ['red chili pepper', 'green chili pepper', 'chili powder'],
+    'jalapeno pepper' : ['red chili pepper', 'green chili pepper', 'chili powder'],
     'wasabi': ['red chili pepper', 'green chili pepper', 'chili powder'],
     'tobasco': ['red chili pepper', 'green chili pepper', 'chili powder'],
     'hot sauce': ['red chili pepper', 'green chili pepper', 'chili powder'],
-    'habanero' : ['red chili pepper', 'green chili pepper', 'chili powder'],
+    'habanero pepper' : ['red chili pepper', 'green chili pepper', 'chili powder'],
 
 }
 
-indian_spices = {
+indian_spices = [
     'turmeric',
     'corriander',
     'cumin',
@@ -29,7 +30,7 @@ indian_spices = {
     'mace',
     'tulsi herb'
 
-}
+]
 
 cheeses = {
     'mozzerella': 'paneer',
@@ -73,27 +74,29 @@ cheeses = {
     'emmental': 'paneer',
     'taleggio': 'paneer',
     'parmigiano-reggiano': 'paneer',
-    'manchego': 'paneer'
+    'manchego': 'paneer',
+    'cream cheese' : 'yogurt'
 
 
 }
 
 sauce_list = {
-    'yogurt': 'dahi'
-    'gravy' : 'creamy spiced gravy'
+    'yogurt' : 'dahi',
+    'gravy' : 'creamy spiced gravy'
 }
 
-indian_sauces = {
-    'coriander chutney',
-    'mint chutney',
-    'tomato puree',
-    'tamarind chutney',
-    'raita',
-    'kuzhambu',
-    'rasam',
-    'sambar',
-    'onion-tomato based gravy'
-}
+indian_sauces = [
+    'coriander chutney',
+    'mint chutney',
+    'tomato puree',
+    'tamarind chutney',
+    'raita',
+    'kuzhambu',
+    'rasam',
+    'sambar',
+    'onion-tomato based gravy'
+]
+
 
 
 meats = {
@@ -103,26 +106,33 @@ meats = {
     'anchovies' : ['prawn', 'black salt'],
     'pork' : ['chicken', 'lamb kabob'],
     'eel' : ['chicken', 'lamb kabob'],
-    'tofu' : ['paneer', 'paneer']
-
+    'tofu' : ['paneer', 'paneer'],
+    'bacon' : ['chicken', 'chicken']
 
 }
-
 
 vegetables_list = {
-    'okra' : 'bhindi',
-    'asparagus' : 'bhindi',
-    'squash' : 'aloo',
-    'corn' : 'capsicum',
-    'refried beans' : 'rajma',
-    'chick peas' : 'chole',
-    'butternut squash' : 'eggplant',
-    'lettuce' : 'cabbage',
-    'broccoli' : 'cauliflower',
-    'blueberries' : 'pommegranate',
-    'watermelon' : 'mango',
-    'arugula' : 'spinach',
-    'olives' : 'mushrooms',
-    'zucchini' : 'cucumber'
+    'okra' : 'bhindi',
+    'asparagus' : 'bhindi',
+    'squash' : 'aloo',
+    'corn' : 'capsicum',
+    'refried beans' : 'rajma',
+    'chick peas' : 'chole',
+    'butternut squash' : 'eggplant',
+    'lettuce' : 'cabbage',
+    'broccoli' : 'cauliflower',
+    'blueberries' : 'pommegranate',
+    'watermelon' : 'mango',
+    'arugula' : 'spinach',
+    'olives' : 'mushrooms',
+    'zucchini' : 'cucumber',
+    'spaghetti squash' : 'green beans',
+    'noodles' : 'rice',
+    'penne pasta' : 'rice',
+    'spaghetti' :'rice',
+    'farfalle pasta': 'rice',
+    'pasta' :'rice',
 
 }
+
+

@@ -9,6 +9,7 @@ from fat_transformations import *
 from carbtransformations import *
 import re
 from copy import deepcopy
+from indian_transformation import *
 
 results = {}
 recipe_book = {}
@@ -30,6 +31,8 @@ descriptors = []
 tools = []
 methods = []
 preparations = []
+sauces = []
+spices = []
 
 decrement_check = {"mixing bowl": "mix", "baking pan": "bake", "baking soda": "bake", "baking powder":"bake"}
 
@@ -110,6 +113,20 @@ def pre_parse():
     for x in lines:
         new = x.rstrip('\n')
         preparations.append(new)
+
+    text_file = open("Team4/sauces.txt", "r")
+    lines = text_file.readlines()
+    global sauces
+    for x in lines:
+        new = x.rstrip('\n')
+        sauces.append(new)
+
+    text_file = open("Team4/general_spices.txt", "r")
+    lines = text_file.readlines()
+    global spices
+    for x in lines:
+        new = x.rstrip('\n')
+        spices.append(new)
 
 def get_ingredients(soup, dct):
     dct["ingredients"] = []
@@ -796,6 +813,76 @@ def highcarb(dct):
     print_transform_recipe(transformed_recipe)
     return transformed_recipe
 
+def indian(dct):
+    
+    transformed_recipe = deepcopy(dct)
+    new_ingredients = transformed_recipe['ingredients']
+    new_steps = transformed_recipe['steps']
+    new_title = transformed_recipe['title']
+    
+    spice_choice = random.randint(0, 2)
+    
+    for x in spicy_list:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, spicy_list[x][spice_choice])
+
+    for x in cheeses:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, cheeses[x])
+
+    for x in sauce_list:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, sauce_list[x])
+
+    my_sauces = list(indian_sauces)
+
+    for x in sauces:
+        for y in new_ingredients:
+            sauce_choice = random.randint(0, len(my_sauces)-1)
+            y['name'] = y['name'].encode('utf-8')
+            if x in y['name'].lower():
+                selection = my_sauces[sauce_choice]
+                y['name'] = y['name'].replace(x, selection)
+                my_sauces.remove(selection)
+#
+#    print spices
+#    print indian_spices
+#
+#
+#    for x in spices:
+#        for y in new_ingredients:
+#            spice_choice_two = random.randint(0, len(indian_spices)-1)
+#            if x in y['name'].lower():
+#                y['name'] = y['name'].encode('utf-8')
+#                y['name'] = y['name'].replace(x, indian_spices[spice_choice_two])
+
+
+
+    meat_choice= random.randint(0, 1)
+    
+    for x in meats:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, meats[x][meat_choice])
+
+    for x in vegetables_list:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, vegetables_list[x])
+
+    # for x in spicy_list:
+    #     new_steps = [w.replace(carbsubstitutions[x], x) for w in new_steps]
+
+    print transformed_recipe['ingredients']
+
 
 
 def main():
@@ -825,7 +912,7 @@ def main():
                 for key in recipe_book:
                     print str(key) + " : " + recipe_book[key]['title']
                 choice = input("which recipe: ")
-                print "\noptions:\n1. to pescatarian\n2. from pescatarian\n3. low fat\n4. high fat\n5. low carb\n6. high carb\n7. to vegetarian\n8. from vegetarian\n"
+                print "\noptions:\n1. to pescatarian\n2. from pescatarian\n3. low fat\n4. high fat\n5. low carb\n6. high carb\n7. to vegetarian\n8. from vegetarian\n9. Indian"
                 choice2 = input("which transform: ")
                 if (choice2 == 1):
                     recipe_book[len(recipe_book.keys())] = transform(recipe_book[choice],1)
@@ -843,6 +930,8 @@ def main():
                     recipe_book[len(recipe_book.keys())] = transform(recipe_book[choice],3)
                 elif (choice2 == 8):
                     recipe_book[len(recipe_book.keys())] = transform(recipe_book[choice],4)
+                elif (choice2 == 9):
+                    recipe_book[len(recipe_book.keys())] = indian(recipe_book[choice])
                 else:
                     print "invalid choice"
             else:
