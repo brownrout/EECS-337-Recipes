@@ -889,10 +889,8 @@ def indian(dct):
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(x, vegetables_list[x])
 
-    # for x in spicy_list:
-    #     new_steps = [w.replace(carbsubstitutions[x], x) for w in new_steps]
 
-    print transformed_recipe['ingredients']
+    print print_transform_recipe(transformed_recipe)
 
 
 
