@@ -91,10 +91,10 @@
             "max": 4
         },
         {
-            "name": ["Parmesan cheese", "cheese"],
+            "name": ["Parmesan cheese", "cheese", "parmesan cheese"],
             "quantity": [0.25],
             "measurement": ["cup"],
-            "descriptor": ["Parmesan", "grated"],
+            "descriptor": ["Parmesan", "grated", "parmesan"],
             "preparation": ["grated"],
             "prep-description": [],
             "max": 5

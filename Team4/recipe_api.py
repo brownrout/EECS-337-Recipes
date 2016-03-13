@@ -152,11 +152,17 @@ def parse_ingredient(ingredient):
         synonyms.append(key)
 
     ingLst = ingredient.split()
+    remove = []
     for word in ingLst:
         if word in synonyms:
             word = equivalents[word]
         if word[0].isnumeric():
-            quantity = word
+            if quantity == '':
+                quantity = str(convert(word))
+                remove.append(word)
+            else:
+                quantity = str(float(quantity) + convert(word))
+                remove.append(word)
             continue
         elif word in units:
             measurement = word
@@ -170,8 +176,9 @@ def parse_ingredient(ingredient):
 
     if measurement in ingLst:
         ingLst.remove(measurement)
-    if quantity in ingLst:
-        ingLst.remove(quantity)
+    for word in remove:
+        if word in ingLst:
+            ingLst.remove(word)
     if descriptor in ingLst:
         ingLst.remove(descriptor)
     if preparation in ingLst:
@@ -181,8 +188,6 @@ def parse_ingredient(ingredient):
 
     if quantity == '':
         quantity = 'none'
-    else:
-        quantity = convert(quantity)
     if measurement == '':
         measurement = 'none'
     if descriptor == '':

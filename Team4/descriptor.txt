@@ -9,8 +9,8 @@ skinless
 sliced
 all-purpose
 italian
-red
 skim
 seasoned
 prepared
 half-drained
+small
