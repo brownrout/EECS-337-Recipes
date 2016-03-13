@@ -79,6 +79,7 @@ def autograder(url):
     get_steps(soup, results)
     # uncomment later
     print_recipe(results)
+    get_structuredsteps(soup, results)
     return results
 
 def pre_parse():
@@ -153,6 +154,48 @@ def get_ingredients(soup, dct):
     # for x in dct['ingredients']:
     #     for k,v in x.items():
     #         print k + " : " + v
+
+def get_structuredsteps(soup, dct):
+    dct['structuredsteps'] = []
+    new_steps = dct['steps']
+    new_ingredients = dct['ingredients']
+
+    for step in new_steps:
+        if step != '':
+            method_list = []
+            for method in methods:
+                if method in step:
+                    method_list.append(method)
+                elif method + "ing" in step:
+                    method_list.append(method)
+                elif method + "s" == step:
+                    method_list.append(method)
+                elif method + "er" == step:
+                    method_list.append(method)
+                elif method + "ed" == step:
+                    method_list.append(method)
+                elif method + "ing" == step:
+                    method_list.append(method)
+            tools_list = []
+            for tool in tools:
+                if tool in step:
+                    tools_list.append(tool)
+            ingredient_list = []
+            for x in new_ingredients:
+                if x['name'] in step:
+                    ingredient_list.append(x['name'])
+            d = {
+                'step': step,
+                'tools': set(tools_list),
+                'methods' : set(method_list),
+                'ingredients' : ingredient_list
+            }
+            dct["structuredsteps"].append(d)
+
+    print dct['structuredsteps']
+        
+
+
 
 def parse_ingredient(ingredient):
 
@@ -246,6 +289,9 @@ def parse_ingredient(ingredient):
     return quantity, measurement, name, descriptor, preparation
 
 # http://stackoverflow.com/questions/575925/how-to-convert-rational-and-decimal-number-strings-to-floats-in-python
+
+
+
 def convert(s):
     try:
         float(s)
