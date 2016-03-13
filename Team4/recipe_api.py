@@ -1025,6 +1025,7 @@ def indian(dct):
     transformed_recipe['title'] = new_title + " (Indian Version)"
     transformed_recipe['ingredients'] = new_ingredients
     print_transform_recipe(transformed_recipe)
+    return transformed_recipe
 
 
 def main():
