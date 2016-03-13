@@ -278,6 +278,9 @@ def get_tools(soup, dct):
     tokenizer = RegexpTokenizer(r'\w+')
 
     directions_string = get_directions(soup)
+    
+    ingredients= dct['ingredients']
+    print ingredients
 
     global tools
 
@@ -285,20 +288,42 @@ def get_tools(soup, dct):
 
     used_list = []
     for x in range(len(directions_list)):
-        if x + 1 < len(directions_list):
+        if x + 2 < len(directions_list):
             two_word_tool = directions_list[x] + ' ' + directions_list[x+1]
+            three_word_tool = directions_list[x] + ' ' + directions_list[x+1] + ' ' + directions_list[x+2]
             used_word = directions_list[x+1]
+            used_word_two = directions_list[x+2]
+        
         one_word_tool = directions_list[x]
         for tool in tools:
             if tool == two_word_tool:
                 used_list.append(used_word)
                 cnt[tool] += 1
+            elif tool == three_word_tool:
+                used_list.append(used_word)
+                used_list.append(used_word_two)
+                cnt[tool] += 1
+
             elif tool == one_word_tool and tool not in used_list:
                 cnt[tool] +=1
+
         for verb in tool_verb_map:
             tool = tool_verb_map[verb]
             if directions_list[x] == verb and tool not in cnt:
                 cnt[tool] +=1
+    
+    for x in ingredients:
+        for verb in tool_verb_map:
+            tool = tool_verb_map[verb]
+            if verb in x['name'] and tool not in cnt:
+                cnt[tool] += 1
+            elif verb in x['descriptor'] and tool not in cnt:
+                cnt[tool] += 1
+            elif verb in x['preparation'] and tool not in cnt:
+                cnt[tool] += 1
+
+
+
 
     for x in cnt.most_common():
         dct["cooking tools"].append(x[0])
