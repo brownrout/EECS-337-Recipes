@@ -322,13 +322,14 @@ def get_methods(soup, dct):
 
     for x in directions_list:
         for y in methods:
-            if y == "preheat":
-                cnt['bake'] += 1
-            
-            if y == "oven":
-                cnt['bake'] += 3
-            elif y == x.lower():
-                cnt[y] += 1
+
+            if y == x.lower():
+                if y == "preheat":
+                    cnt['bake'] += 1
+                elif y == "oven":
+                    cnt['bake'] += 2
+                else:
+                    cnt[y] += 1
             
             elif y + "ing" == x.lower():
                 cnt[y] += 1
