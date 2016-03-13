@@ -953,9 +953,12 @@ def indian(dct):
             if x in new_steps[y]:
                 new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
 
-    # for x in sauces:
-    #     if x in new_title.lower():
-    #         new_title = new_title.replace(x, ingredients_dict[x])
+
+#key error
+#    for x in sauces:
+#        new_title = new_title.encode('utf-8')
+#        if x in new_title.lower():
+#            new_title = new_title.replace(x, ingredients_dict[x])
 
 
 
