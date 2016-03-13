@@ -359,14 +359,19 @@ def get_methods(soup, dct):
             
             elif y + "ing" == x.lower():
                 cnt[y] += 1
+                cnt[y + "ing"] += 1
             elif y + "s" == x.lower():
                 cnt[y]+=1
+                cnt[y+ "s"] += 1
             elif y + "er" == x.lower():
                 cnt[y] += 1
+                cnt[y + "er"] += 1
             elif y + "ed" == x.lower():
                 cnt[y] += 1
+                cnt[y + 'ed'] += 1
             elif y[:-1]+ "ing" == x.lower():
                 cnt[y]+=1
+                cnt[y[:-1]+ "ing"] +=1
 
 
 
