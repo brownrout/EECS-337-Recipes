@@ -729,8 +729,8 @@ def low2highfat(dct):
 
     new_title = new_title.encode('utf-8').lower()
     for x in substitutions:
-         if x in new_title.lower():
-             new_title =new_title.replace(x, substitutions[x])
+        if x in new_title.lower():
+            new_title =new_title.replace(x, substitutions[x])
 
 
 
@@ -861,14 +861,49 @@ def indian(dct):
     new_ingredients = transformed_recipe['ingredients']
     new_steps = transformed_recipe['steps']
     new_title = transformed_recipe['title']
+    ingredients_dict = {}
     
     spice_choice = random.randint(0, 2)
     
+    for y in new_ingredients:
+        for z in spicy_stopwords:
+            if z in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(z, '')
+
+    for y in new_title:
+        for z in spicy_stopwords:
+            if z in new_title:
+                new_title = new_title.encode('utf-8')
+                new_title = new_title.replace(z, '')
+
+    #ranch dressing mix issue
+    # for y in new_ingredients:
+    #     for z in sauces_stopwords:
+    #         if z in y['name'].lower():
+    #             y['name'] = y['name'].encode('utf-8')
+    #             y['name'] = y['name'].replace(z, '')
+
+
     for x in spicy_list:
         for y in new_ingredients:
             if x in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
-                y['name'] = y['name'].replace(x, spicy_list[x][spice_choice])
+                selection = spicy_list[x][spice_choice]
+                ingredients_dict[x] = selection
+                y['name'] = y['name'].replace(x, selection)
+
+    for x in spicy_list:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
+
+    for x in spicy_list:
+         if x in new_title.lower():
+            new_title = new_title.replace(x, ingredients_dict[x])
+            transformed_recipe['title'] = new_title
+
+
 
     for x in cheeses:
         for y in new_ingredients:
@@ -876,11 +911,26 @@ def indian(dct):
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(x, cheeses[x])
 
+    for x in cheeses:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, cheeses[x])
+
+    for x in cheeses:
+         if x in new_title.lower():
+            new_title = new_title.replace(x, ingredients_dict[x])
+            transformed_recipe['title'] = new_title
+
     for x in sauce_list:
         for y in new_ingredients:
             if x in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(x, sauce_list[x])
+
+    for x in sauce_list:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, sauce_list[x])
 
     my_sauces = list(indian_sauces)
 
@@ -890,8 +940,15 @@ def indian(dct):
             y['name'] = y['name'].encode('utf-8')
             if x in y['name'].lower():
                 selection = my_sauces[sauce_choice]
+                ingredients_dict[x] = selection
                 y['name'] = y['name'].replace(x, selection)
                 my_sauces.remove(selection)
+
+    for x in sauces:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
+
 
 
     my_spices = list(indian_spices)
@@ -902,8 +959,14 @@ def indian(dct):
             y['name'] = y['name'].encode('utf-8')
             if x in y['name'].lower():
                 selection = my_spices[spice_choice_two]
+                ingredients_dict[x] = selection
                 y['name'] = y['name'].replace(x, selection)
                 my_spices.remove(selection)
+
+    for x in spices:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
 
 
     meat_choice= random.randint(0, 1)
@@ -912,7 +975,16 @@ def indian(dct):
         for y in new_ingredients:
             if x in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
-                y['name'] = y['name'].replace(x, meats[x][meat_choice])
+                selection = meats[x][meat_choice]
+                ingredients_dict[x] = selection
+                y['name'] = y['name'].replace(x, selection)
+
+    for x in meats:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
+
+
 
     for x in vegetables_list:
         for y in new_ingredients:
@@ -920,9 +992,16 @@ def indian(dct):
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(x, vegetables_list[x])
 
+    for x in vegetables_list:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, vegetables_list[x])
 
-    print print_transform_recipe(transformed_recipe)
 
+    transformed_recipe['steps'] = new_steps
+    transformed_recipe['title'] = new_title
+    transformed_recipe['ingredients'] = new_ingredients
+    print_transform_recipe(transformed_recipe)
 
 
 def main():

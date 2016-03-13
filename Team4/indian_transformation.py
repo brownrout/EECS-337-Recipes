@@ -1,13 +1,15 @@
 
 
 spicy_list = {
-    'jalapeno pepper' : ['red chili pepper', 'green chili pepper', 'chili powder'],
+    'jalapeno' : ['red chili pepper', 'green chili pepper', 'red chili pepper'],
     'wasabi': ['red chili pepper', 'green chili pepper', 'chili powder'],
     'tobasco': ['red chili pepper', 'green chili pepper', 'chili powder'],
     'hot sauce': ['red chili pepper', 'green chili pepper', 'chili powder'],
-    'habanero pepper' : ['red chili pepper', 'green chili pepper', 'chili powder'],
+    'habanero pepper' : ['red chili pepper', 'green chili pepper', 'red chili pepper'],
 
 }
+
+spicy_stopwords = ['peppers', 'pepper']
 
 indian_spices = [
     'turmeric',
