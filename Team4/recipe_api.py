@@ -901,7 +901,6 @@ def indian(dct):
     for x in spicy_list:
          if x in new_title.lower():
             new_title = new_title.replace(x, ingredients_dict[x])
-            transformed_recipe['title'] = new_title
 
 
 
@@ -918,8 +917,7 @@ def indian(dct):
 
     for x in cheeses:
          if x in new_title.lower():
-            new_title = new_title.replace(x, ingredients_dict[x])
-            transformed_recipe['title'] = new_title
+            new_title = new_title.replace(x, cheeses[x])
 
     for x in sauce_list:
         for y in new_ingredients:
@@ -931,6 +929,10 @@ def indian(dct):
         for y in range(0, len(new_steps)):
             if x in new_steps[y]:
                 new_steps[y] = new_steps[y].replace(x, sauce_list[x])
+
+    for x in sauce_list:
+         if x in new_title.lower():
+            new_title = new_title.replace(x, sauce_list[x])
 
     my_sauces = list(indian_sauces)
 
@@ -948,6 +950,10 @@ def indian(dct):
         for y in range(0, len(new_steps)):
             if x in new_steps[y]:
                 new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
+
+    # for x in sauces:
+    #     if x in new_title.lower():
+    #         new_title = new_title.replace(x, ingredients_dict[x])
 
 
 
@@ -968,6 +974,10 @@ def indian(dct):
             if x in new_steps[y]:
                 new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
 
+    # for x in spices:
+    #     if x in new_title.lower():
+    #         new_title = new_title.replace(x, ingredients_dict[x])
+
 
     meat_choice= random.randint(0, 1)
     
@@ -984,6 +994,10 @@ def indian(dct):
             if x in new_steps[y]:
                 new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
 
+    for x in meats:
+        if x in new_title.lower():
+            new_title = new_title.replace(x, ingredients_dict[x])
+
 
 
     for x in vegetables_list:
@@ -996,6 +1010,10 @@ def indian(dct):
         for y in range(0, len(new_steps)):
             if x in new_steps[y]:
                 new_steps[y] = new_steps[y].replace(x, vegetables_list[x])
+
+    for x in vegetables_list:
+        if x in new_title.lower():
+            new_title = new_title.replace(x, vegetables_list[x])
 
 
     transformed_recipe['steps'] = new_steps
