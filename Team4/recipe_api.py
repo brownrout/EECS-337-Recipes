@@ -60,6 +60,7 @@ def autograder(url):
     '''Accepts the URL for a recipe, and returns a dictionary of the
     parsed results in the correct format. See project sheet for
     details on correct format.'''
+    pre_parse()
     r = urllib.urlopen(url).read()
     soup = BeautifulSoup(r, "lxml")
     global results
@@ -71,7 +72,7 @@ def autograder(url):
     get_tools(soup, results)
     get_steps(soup, results)
     # uncomment later
-    print_recipe(results)
+    #print_recipe(results)
     return results
 
 def pre_parse():
