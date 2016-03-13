@@ -2,9 +2,9 @@
 spicy_list = {
     'jalapeno' : ['red chili pepper', 'green chili pepper', 'chili powder'],
     'wasabi': ['red chili pepper', 'green chili pepper', 'chili powder'],
-
-
-
+    'tobasco': ['red chili pepper', 'green chili pepper', 'chili powder'],
+    'hot sauce': ['red chili pepper', 'green chili pepper', 'chili powder'],
+    'habanero' : ['red chili pepper', 'green chili pepper', 'chili powder'],
 
 }
 
@@ -93,4 +93,36 @@ indian_sauces = {
     'rasam',
     'sambar',
     'onion-tomato based gravy'
+}
+
+
+meats = {
+    'steak': ['lamb kabob', 'chicken'],
+    'beef': ['lamb kabob', 'chicken'],
+    'tuna' : ['prawn', 'crab'],
+    'anchovies' : ['prawn', 'black salt'],
+    'pork' : ['chicken', 'lamb kabob'],
+    'eel' : ['chicken', 'lamb kabob'],
+    'tofu' : ['paneer', 'paneer']
+
+
+}
+
+
+vegetables_list = {
+    'okra' : 'bhindi',
+    'asparagus' : 'bhindi',
+    'squash' : 'aloo',
+    'corn' : 'capsicum',
+    'refried beans' : 'rajma',
+    'chick peas' : 'chole',
+    'butternut squash' : 'eggplant',
+    'lettuce' : 'cabbage',
+    'broccoli' : 'cauliflower',
+    'blueberries' : 'pommegranate',
+    'watermelon' : 'mango',
+    'arugula' : 'spinach',
+    'olives' : 'mushrooms',
+    'zucchini' : 'cucumber'
+
 }
