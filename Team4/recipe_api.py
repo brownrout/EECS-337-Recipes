@@ -861,18 +861,18 @@ def indian(dct):
                 selection = my_sauces[sauce_choice]
                 y['name'] = y['name'].replace(x, selection)
                 my_sauces.remove(selection)
-#
-#    print spices
-#    print indian_spices
-#
-#
-#    for x in spices:
-#        for y in new_ingredients:
-#            spice_choice_two = random.randint(0, len(indian_spices)-1)
-#            if x in y['name'].lower():
-#                y['name'] = y['name'].encode('utf-8')
-#                y['name'] = y['name'].replace(x, indian_spices[spice_choice_two])
 
+
+    my_spices = list(indian_spices)
+
+    for x in spices:
+        for y in new_ingredients:
+            spice_choice_two = random.randint(0, len(my_spices)-1)
+            y['name'] = y['name'].encode('utf-8')
+            if x in y['name'].lower():
+                selection = my_spices[spice_choice_two]
+                y['name'] = y['name'].replace(x, selection)
+                my_spices.remove(selection)
 
 
     meat_choice= random.randint(0, 1)
