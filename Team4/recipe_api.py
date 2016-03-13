@@ -159,7 +159,12 @@ def get_structuredsteps(soup, dct):
     dct['structuredsteps'] = []
     new_steps = dct['steps']
     new_ingredients = dct['ingredients']
+    tokenizer = RegexpTokenizer(r'\w+')
 
+    time_units = ['min', 'min.', 'minutes', 'minute', 'hour', 'hours', 'hr', 'hrs', 'hr.', 'hrs.']
+    
+        
+    
     for step in new_steps:
         if step != '':
             method_list = []
@@ -180,14 +185,27 @@ def get_structuredsteps(soup, dct):
             for tool in tools:
                 if tool in step:
                     tools_list.append(tool)
+            
+            for verb in tool_verb_map:
+                if verb in step:
+                    tools_list.append(tool_verb_map[verb])
             ingredient_list = []
             for x in new_ingredients:
                 if x['name'] in step:
                     ingredient_list.append(x['name'])
+            
+            cooking_time = " "
+            step_list = tokenizer.tokenize(step)
+            
+            for x in range(0,len(step_list)-2):
+                if step_list[x].isdigit():
+                    if step_list[x+1] in time_units:
+                        cooking_time += step_list[x]+ ' ' + step_list[x+1] + ' '
             d = {
                 'step': step,
                 'tools': set(tools_list),
                 'methods' : set(method_list),
+                'cooking time': cooking_time,
                 'ingredients' : ingredient_list
             }
             dct["structuredsteps"].append(d)
