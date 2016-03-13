@@ -5,7 +5,6 @@ extra-virgin
 virgin
 fresh
 boneless
-skinless
 sliced
 all-purpose
 italian
@@ -14,3 +13,8 @@ seasoned
 prepared
 half-drained
 small
+extra
+lean
+brown
+sea
+parmesan
