@@ -1,4 +1,4 @@
-'''Version 0.2'''
+'''Version 0.31'''
 import json
 import csv
 import glob
@@ -64,12 +64,26 @@ def check_ingredients(answer, stud):
     for x in range(min([len(answer), len(stud)])):
         for ind in ['name', 'measurement', 'quantity', 'descriptor', 'preparation', 'prep-description']:
             if ind in stud[x]:
-                print stud[x][ind]
-                print answer[x][ind]
-                if stud[x][ind] in answer[x][ind]:
+                print "\nYour answer: %s"%str(stud[x][ind])
+                print "Valid answers: %s"%str(answer[x][ind])
+                
+                if ind == 'quantity':
+                    flag = False
+                    for val in answer[x][ind]:
+                        if val == stud[x][ind]:
+                            flag = True
+                        elif float('%.2f'%stud[x][ind]) == val:
+                            flag = True
+                        if flag:
+                            score += 1
+                        else:
+                            print "Match!"
+                
+                elif stud[x][ind] in answer[x][ind]:
                     score += 1
-        print "---"
+
         scores.append(min([score, answer[x]['max']]))
+        print "Score: %s\n---"%str(scores[-1])
         score = 0
 
     return sum(scores)

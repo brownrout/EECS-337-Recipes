@@ -119,11 +119,11 @@ def get_ingredients(soup, dct):
         quantity, measurement, name, descriptor, preparation = parse_ingredient(element.get_text().lower())
         d = {
           'name': unicode(name),
-          'quantity':unicode(quantity),
+          'quantity':quantity,
           'measurement':unicode(measurement),
           'descriptor': unicode(descriptor),
           'preparation':  unicode(preparation),
-          'prep-description': "none"
+          'prep-description': None
         }
         dct["ingredients"].append(d)
 
@@ -136,7 +136,7 @@ def get_ingredients(soup, dct):
 
 def parse_ingredient(ingredient):
 
-    quantity = ''
+    quantity = 0
     name = ''
     measurement = ''
     descriptor = ''
@@ -160,10 +160,10 @@ def parse_ingredient(ingredient):
             word = equivalents[word]
         if word[0].isnumeric():
             if quantity == '':
-                quantity = str(convert(word))
+                quantity = float(convert(word))
                 removeQ.append(word)
             else:
-                quantity = str(float(quantity) + convert(word))
+                quantity = float(quantity) + float(convert(word))
                 removeQ.append(word)
             continue
         elif word in units:
@@ -198,22 +198,30 @@ def parse_ingredient(ingredient):
     if preparation in ingLst:
         ingLst.remove(preparation)
 
-    stopwords = ['or', 'more', 'as', 'needed', 'with', 'skin', 'to']
+    stopwords = ['or', 'more', 'as', 'needed', 'with', 'skin', 'to', 'taste', 'such', 'frank\'s', 'redhot']
     for word in stopwords:
         if word in ingLst:
             ingLst.remove(word)
 
     name = ' '.join(ingLst)
     name = name.replace(',', '')
+    name = name.replace('(', '')
+    name = name.replace(')', '')
+    name = name.replace(u'\xae', '')
 
-    if quantity == '':
-        quantity = 'none'
+    special_cases = ['lemon']
+
+    if quantity == 0:
+        quantity = 0
     if measurement == '':
-        measurement = 'none'
+        if name in special_cases:
+            measurement = 'unit'
+        else:
+            measurement = None
     if descriptor == '':
-        descriptor = 'none'
+        descriptor = None
     if preparation == '':
-        preparation = 'none'
+        preparation = None
 
     return quantity, measurement, name, descriptor, preparation
 
