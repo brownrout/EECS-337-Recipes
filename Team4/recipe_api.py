@@ -118,11 +118,11 @@ def get_ingredients(soup, dct):
     for element in letters:
         quantity, measurement, name, descriptor, preparation = parse_ingredient(element.get_text().lower())
         d = {
-          'name': name,
-          'quantity':quantity,
-          'measurement':measurement,
-          'descriptor': descriptor,
-          'preparation':  preparation,
+          'name': unicode(name),
+          'quantity':unicode(quantity),
+          'measurement':unicode(measurement),
+          'descriptor': unicode(descriptor),
+          'preparation':  unicode(preparation),
           'prep-description': "none"
         }
         dct["ingredients"].append(d)
@@ -152,39 +152,59 @@ def parse_ingredient(ingredient):
         synonyms.append(key)
 
     ingLst = ingredient.split()
-    remove = []
+    removeQ = []
+    removeD = []
+    removeM = []
     for word in ingLst:
         if word in synonyms:
             word = equivalents[word]
         if word[0].isnumeric():
             if quantity == '':
                 quantity = str(convert(word))
-                remove.append(word)
+                removeQ.append(word)
             else:
                 quantity = str(float(quantity) + convert(word))
-                remove.append(word)
+                removeQ.append(word)
             continue
         elif word in units:
-            measurement = word
+            if measurement == '':
+                removeM.append(word)
+                measurement = word
+            else:
+                removeM.append(word)
+                measurement += ' ' + word
             continue
         elif word in descriptors:
-            descriptor = word
+            if descriptor == '':
+                removeD.append(word)
+                descriptor = word
+            else:
+                removeD.append(word)
+                descriptor += ' ' + word
             continue
         elif word in preparations:
             preparation = word
             continue
 
-    if measurement in ingLst:
-        ingLst.remove(measurement)
-    for word in remove:
+    for word in removeM:
         if word in ingLst:
             ingLst.remove(word)
-    if descriptor in ingLst:
-        ingLst.remove(descriptor)
+    for word in removeQ:
+        if word in ingLst:
+            ingLst.remove(word)
+    for word in removeD:
+        if word in ingLst:
+            ingLst.remove(word)
     if preparation in ingLst:
         ingLst.remove(preparation)
 
+    stopwords = ['or', 'more', 'as', 'needed', 'with', 'skin', 'to']
+    for word in stopwords:
+        if word in ingLst:
+            ingLst.remove(word)
+
     name = ' '.join(ingLst)
+    name = name.replace(',', '')
 
     if quantity == '':
         quantity = 'none'
