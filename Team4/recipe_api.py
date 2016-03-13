@@ -32,6 +32,7 @@ tools = []
 methods = []
 preparations = []
 sauces = []
+spices = []
 
 decrement_check = {"mixing bowl": "mix", "baking pan": "bake", "baking soda": "bake", "baking powder":"bake"}
 
@@ -119,6 +120,13 @@ def pre_parse():
     for x in lines:
         new = x.rstrip('\n')
         sauces.append(new)
+
+    text_file = open("Team4/general_spices.txt", "r")
+    lines = text_file.readlines()
+    global spices
+    for x in lines:
+        new = x.rstrip('\n')
+        spices.append(new)
 
 def get_ingredients(soup, dct):
     dct["ingredients"] = []
@@ -824,16 +832,28 @@ def indian(dct):
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(x, sauce_list[x])
 
-    sauce_choice = random.randint(0, len(indian_sauces)-1)
-    my_sauces = indian_sauces
+    my_sauces = list(indian_sauces)
 
     for x in sauces:
         for y in new_ingredients:
+            sauce_choice = random.randint(0, len(my_sauces)-1)
             y['name'] = y['name'].encode('utf-8')
             if x in y['name'].lower():
-                print y['name']
-                print indian_sauces[1]
-                y['name'] = y['name'].replace(x, indian_sauces[sauce_choice])
+                selection = my_sauces[sauce_choice]
+                y['name'] = y['name'].replace(x, selection)
+                my_sauces.remove(selection)
+#
+#    print spices
+#    print indian_spices
+#
+#
+#    for x in spices:
+#        for y in new_ingredients:
+#            spice_choice_two = random.randint(0, len(indian_spices)-1)
+#            if x in y['name'].lower():
+#                y['name'] = y['name'].encode('utf-8')
+#                y['name'] = y['name'].replace(x, indian_spices[spice_choice_two])
+
 
 
     meat_choice= random.randint(0, 1)
