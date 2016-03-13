@@ -1,6 +1,8 @@
 spatula
 knife
 cooker
+microwave safe bowl
+baster
 pan
 yogurt maker
 peeler
@@ -113,3 +115,4 @@ casserole
 mixing bowl
 frying pan
 baking sheet
+loaf pan

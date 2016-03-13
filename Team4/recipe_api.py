@@ -34,11 +34,13 @@ preparations = []
 sauces = []
 spices = []
 
-decrement_check = {"mixing bowl": "mix", "baking pan": "bake", "baking soda": "bake", "baking powder":"bake"}
+decrement_check = {"mixing bowl": "mix", "baking soda": "bake", "baking powder":"bake", "preheat" : "preheat"}
 
 #move elsewhere later
 tool_verb_map = {
   'chop':'knife',
+  'basting' : 'baster',
+  'baste' : 'baster',
   'stir':'wooden spoon',
   'beat':'fork',
   'cream':'hand mixer',
@@ -49,6 +51,7 @@ tool_verb_map = {
   'julienne':'knife',
   'marinate':'bowl',
   'mince':'knife',
+  'minced' : 'knife',
   'shred':'food processor',
   'sift':'colander',
   'slice':'knife',
@@ -75,7 +78,7 @@ def autograder(url):
     get_tools(soup, results)
     get_steps(soup, results)
     # uncomment later
-    #print_recipe(results)
+    print_recipe(results)
     return results
 
 def pre_parse():
@@ -319,8 +322,14 @@ def get_methods(soup, dct):
 
     for x in directions_list:
         for y in methods:
-            if y == x.lower():
+            if y == "preheat":
+                cnt['bake'] += 1
+            
+            if y == "oven":
+                cnt['bake'] += 3
+            elif y == x.lower():
                 cnt[y] += 1
+            
             elif y + "ing" == x.lower():
                 cnt[y] += 1
             elif y + "s" == x.lower():
@@ -331,6 +340,7 @@ def get_methods(soup, dct):
                 cnt[y] += 1
             elif y[:-1]+ "ing" == x.lower():
                 cnt[y]+=1
+
 
 
     #decrement tools mistaken for methods
