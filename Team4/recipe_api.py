@@ -271,6 +271,7 @@ def get_steps(soup,dct):
             dct['steps'].append(str(element.text).lower())
     return
 
+
 def get_tools(soup, dct):
     cnt = Counter()
     dct["cooking tools"] = []
@@ -473,7 +474,10 @@ def transform(dct,transType):
             'sausage': ['shrimp', 'eel'],
             'pork': ['shrimp', 'scallop'],
             'ham': ['salmon', 'shrimp'],
-            'tofu': ['tilapia', 'cod']
+            'tofu': ['tilapia', 'cod'],
+            'flank' : ['', ''],
+            'sirloin':['', '']
+
     }
     elif (transType == 2):
         # from pescatarian
@@ -498,7 +502,11 @@ def transform(dct,transType):
             'swordfish': ['steak', 'chicken'],
             'oyster': ['bacon', 'pork'],
             'crawfish': ['sausage', 'pork'],
-            'bass' : ['chicken', 'turkey']
+            'bass' : ['chicken', 'turkey'],
+            'catfish' : ['chicken', 'steak'],
+            'blackened': ['', ''],
+            'filet': ['', ''],
+            'filets': ['', '']
 
     }
     elif (transType == 3):
@@ -533,7 +541,9 @@ def transform(dct,transType):
             'oyster': ['bok choy', 'chickpea cakes'],
             'crawfish': ['tofu', 'eggplant'],
             'bass' : ['tofu', 'tempeh'],
-            'canadian' : ['', '']
+            'canadian' : ['', ''],
+            'flank' : ['', ''],
+            'sirloin':['', '']
     }
     else:
         # from vegetarian
@@ -954,12 +964,6 @@ def indian(dct):
                 new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
 
 
-#key error
-#    for x in sauces:
-#        new_title = new_title.encode('utf-8')
-#        if x in new_title.lower():
-#            new_title = new_title.replace(x, ingredients_dict[x])
-
 
 
     my_spices = list(indian_spices)
@@ -978,10 +982,6 @@ def indian(dct):
         for y in range(0, len(new_steps)):
             if x in new_steps[y]:
                 new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
-
-    # for x in spices:
-    #     if x in new_title.lower():
-    #         new_title = new_title.replace(x, ingredients_dict[x])
 
 
     meat_choice= random.randint(0, 1)
@@ -1022,7 +1022,7 @@ def indian(dct):
 
 
     transformed_recipe['steps'] = new_steps
-    transformed_recipe['title'] = new_title
+    transformed_recipe['title'] = new_title + " (Indian Version)"
     transformed_recipe['ingredients'] = new_ingredients
     print_transform_recipe(transformed_recipe)
 
