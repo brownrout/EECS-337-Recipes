@@ -540,18 +540,19 @@ def transform(dct,transType):
             #proof of conept, needs refining
             'tofu':['chicken','tilapia'],
             'eggplant':  ['cod', 'chicken'],
-            'portobello mushroom': ['burger', 'swordfish'],
+            'mushroom': ['burger', 'swordfish'],
             'zuchinni' : ['shrimp', 'chicken'],
             'tempeh': ['chicken', 'bass'],
             'seitan': ['chicken','salmon'],
             'bok choy': ['squid', 'octopus'],
             'chickpea': ['scallop', 'chicken'],
+            'mushrooms': ['chicken', 'squid'],
             'mushroom': ['chicken', 'squid'],
             'squash': ['shrimp', 'chicken'],
             'bean': ['chicken', 'grouper'],
             'asparagus': ['shrimp', 'chicken'],
-            'potato' : ['chicken', 'cod']
-
+            'potato' : ['chicken', 'cod'],
+            'portabello' : ['', '']
 }
 
 
@@ -576,9 +577,9 @@ def transform(dct,transType):
     new_title = transformed_recipe['title']
     for word in transformed_recipe['title'].split():
         if word in subs:
-            new_title = transformed_recipe['title'].replace(word,substitutes[word][choice])
+            new_title = new_title.replace(word,substitutes[word][choice])
     
-    transformed_recipe['title'] = new_title.lower()
+    transformed_recipe['title'] =  " ".join(new_title.split()).lower()
 
     if (transType == 1):
         transformed_recipe['title'] += " (pescatarian)"
