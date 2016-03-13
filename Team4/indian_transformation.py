@@ -107,3 +107,22 @@ meats = {
 
 
 }
+
+
+vegetables_list = {
+    'okra' : 'bhindi',
+    'asparagus' : 'bhindi',
+    'squash' : 'aloo',
+    'corn' : 'capsicum',
+    'refried beans' : 'rajma',
+    'chick peas' : 'chole',
+    'butternut squash' : 'eggplant',
+    'lettuce' : 'cabbage',
+    'broccoli' : 'cauliflower',
+    'blueberries' : 'pommegranate',
+    'watermelon' : 'mango',
+    'arugula' : 'spinach',
+    'olives' : 'mushrooms',
+    'zucchini' : 'cucumber'
+
+}
