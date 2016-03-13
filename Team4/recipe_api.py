@@ -351,6 +351,7 @@ def get_methods(soup, dct):
             if y == x.lower():
                 if y == "preheat":
                     cnt['bake'] += 1
+                    cnt['preheat'] += 1
                 elif y == "oven":
                     cnt['bake'] += 2
                 else:
