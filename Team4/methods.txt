@@ -50,3 +50,4 @@ cook
 reduce
 adjust
 spoon
+cut

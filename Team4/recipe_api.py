@@ -59,7 +59,8 @@ tool_verb_map = {
   'puree':'blender',
   'grate':'grater',
   'crush':'pestle mortar',
-  'whisk':'whisk'
+  'whisk':'whisk',
+  'cut' : 'knife'
 }
 
 def autograder(url):
@@ -163,7 +164,16 @@ def get_structuredsteps(soup, dct):
 
     time_units = ['min', 'min.', 'minutes', 'minute', 'hour', 'hours', 'hr', 'hrs', 'hr.', 'hrs.']
     
-        
+    ingredient_names = []
+    for y in new_ingredients:
+        ingredient_names.append(y['name'])
+
+    for x in ingredient_names:
+        x.split()
+        print x.split()
+        for y in x.split():
+            print y
+
     
     for step in new_steps:
         if step != '':
@@ -190,9 +200,10 @@ def get_structuredsteps(soup, dct):
                 if verb in step:
                     tools_list.append(tool_verb_map[verb])
             ingredient_list = []
-            for x in new_ingredients:
-                if x['name'] in step:
-                    ingredient_list.append(x['name'])
+            for x in ingredient_names:
+                for y in x.split():
+                    if y in step:
+                        ingredient_list.append(x)
             
             cooking_time = " "
             step_list = tokenizer.tokenize(step)
