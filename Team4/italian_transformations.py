@@ -73,7 +73,7 @@ sauce_list = {
     'gravy' : 'italian gravy'
 }
 
-indian_sauces = [
+italian_sauces = [
     'marinara sauce',
     'neapolitan ragù',
     'pesto',

@@ -26,7 +26,7 @@ chinese_spices = [
     'hot mustard',
     'bird’s eye chili pepper',
     'cinnamon sticks',
-    'kaffir lime leaf'
+    'kaffir lime leaves'
 
 ]
 
@@ -83,7 +83,7 @@ sauce_list = {
     'gravy' : 'chinese brown gravy'
 }
 
-indian_sauces = [
+chinese_sauces = [
     'soy sauce',
     'light soy sauce',
     'dark soy sauce',
