@@ -1,4 +1,4 @@
-'''Version 0.31'''
+'''Version 0.32'''
 import json
 import csv
 import glob
@@ -66,11 +66,14 @@ def check_ingredients(answer, stud):
             if ind in stud[x]:
                 print "\nYour answer: %s"%str(stud[x][ind])
                 print "Valid answers: %s"%str(answer[x][ind])
-                
+
                 if ind == 'quantity':
                     flag = False
                     for val in answer[x][ind]:
-                        if val == stud[x][ind]:
+                        if type(stud[x][ind]) is str:
+                            if val == stud[x][ind]:
+                                flag = True
+                        elif val == stud[x][ind]:
                             flag = True
                         elif float('%.2f'%stud[x][ind]) == val:
                             flag = True

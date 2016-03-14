@@ -37,10 +37,10 @@
             "max": 4
         },
         {
-            "name": ["seasoning", "Italian seasoning"],
+            "name": ["seasoning", "Italian seasoning", "italian seasoning"],
             "quantity": [1.5],
             "measurement": ["teaspoon", "teaspoons"],
-            "descriptor": ["Italian"],
+            "descriptor": ["Italian", "italian"],
             "preparation": [],
             "prep-description": [],
             "max": 4
