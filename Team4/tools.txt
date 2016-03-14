@@ -1,32 +1,33 @@
-spatula
+casserole
 knife
 cooker
 microwave safe bowl
 baster
 pan
-yogurt maker
 peeler
 cube tray
 strainer
+measuring cups
 fruit muddler
 freezer tray
 plate
+yogurt maker
 fry pan
-cake pan
-foil
 cuisinart
 grinder
+spatula
 mincer
+fork
 hullster
 shaker
 grate and slice set
 scale
-measuring cups
 spoon
-fork
 press
 whisk
 skimmer
+cake pan
+foil
 tongs
 potato masher
 soup ladle
@@ -35,12 +36,11 @@ an opener
 juicer press
 floor sifter
 pizza wheel
-tea ball
-pepper grinder
 salt shaker
 grater
 corkscrew
 lid
+pepper grinder
 bowl
 measuring cup
 utensil
@@ -75,24 +75,17 @@ seal
 stopper
 pourer
 scale
+tea ball
 timer
 thermometer
 board
+baking cups
 cloth
 parchment roll
 aluminium foil
 cupcake liners
 decorating pen
 muffin papers
-baking cups
-baking pan
-bags
-smoother
-sieve
-wheel
-shield
-blender
-scraper
 lifter
 gloves
 rack
@@ -100,10 +93,18 @@ rolling pin
 skewer
 wrangler
 oven
-microwave
-lighter
+baking pan
+bags
+smoother
+sieve
+wheel
+shield
 probe
 rack
+blender
+scraper
+microwave
+lighter
 saucepan
 baking dish
 plastic bag
@@ -111,7 +112,6 @@ paper warp
 pan
 dish
 skillet
-casserole
 mixing bowl
 frying pan
 baking sheet
