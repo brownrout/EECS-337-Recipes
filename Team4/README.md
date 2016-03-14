@@ -32,4 +32,4 @@ EXTERNAL LIBRARIES:
 - nltk corpus: we leveraged tokenization to iterate through strings and identify words for substitution
 
 REPOSITORIES
-The structure behind our cuisine transformations was inspired by this repo: https://github.com/jeanniet13/Recipes
+The structure behind our cuisine transformations and how to map verb actions to tools was inspired by this repo: https://github.com/jeanniet13/Recipes
