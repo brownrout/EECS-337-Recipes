@@ -510,7 +510,7 @@ def print_recipe(dct):
 
 def print_transform_recipe(dct):
     for key in dct:
-        if key != 'steps':
+        if key != 'steps' and key != 'structuredsteps':
             if key != 'cooking tools' and key != 'cooking methods' and key != 'primary cooking method':
                 print key + ":\n"
                 if isinstance(dct[key], basestring):
@@ -524,7 +524,7 @@ def print_transform_recipe(dct):
                         else:
                             print value
                 print '\n'
-        else:
+        elif key == 'steps':
             print key + ":\n"
             for index, elem in enumerate(dct[key]):
                 if elem != "":
