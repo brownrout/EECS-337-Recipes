@@ -78,8 +78,8 @@ def autograder(url):
     get_tools(soup, results)
     get_steps(soup, results)
     # uncomment later
-    print_recipe(results)
     get_structuredsteps(soup, results)
+    print_recipe(results)
     return results
 
 def pre_parse():
@@ -209,8 +209,6 @@ def get_structuredsteps(soup, dct):
                 'ingredients' : ingredient_list
             }
             dct["structuredsteps"].append(d)
-
-    print dct['structuredsteps']
         
 
 
@@ -345,7 +343,6 @@ def get_tools(soup, dct):
     directions_string = get_directions(soup)
     
     ingredients= dct['ingredients']
-    print ingredients
 
     global tools
 
@@ -479,7 +476,25 @@ def get_methods(soup, dct):
 
 def print_recipe(dct):
     for key in dct:
-        if key != 'steps':
+        if key == 'structuredsteps':
+            print 'Structured Steps:'
+            for index, elem in enumerate(dct[key]):
+                if elem != "":
+                    print str(index+1) + ". " + elem['step']
+                    if len(elem['ingredients']) != 0:
+                        ingredString = "ingredients: " + ', '.join(elem['ingredients'])
+                        print ingredString
+                    if elem['cooking time'] != ' ':
+                        print "cooking time: " + elem['cooking time']
+                    if len(elem['tools']) != 0:
+                        toolString = "tools: " + ', '.join(elem['tools'])
+                        print toolString 
+                    if len(elem['methods']) != 0:
+                        methString = "methods: " + ', '.join(elem['methods'])
+                        print methString
+                    print '\n'
+            print '\n'
+        elif key != 'steps':
             print key + ":\n"
             if isinstance(dct[key], basestring):
                 print dct[key]
@@ -491,12 +506,6 @@ def print_recipe(dct):
                         print '\n'
                     else:
                         print value
-            print '\n'
-        else:
-            print key + ":\n"
-            for index, elem in enumerate(dct[key]):
-                if elem != "":
-                    print str(index+1) + ". " + elem
             print '\n'
 
 def print_transform_recipe(dct):
@@ -521,6 +530,9 @@ def print_transform_recipe(dct):
                 if elem != "":
                     print str(index+1) + ". " + elem
             print '\n'
+    print '\n'
+
+    
 
 
 def transform(dct,transType):
