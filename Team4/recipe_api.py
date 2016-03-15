@@ -1345,7 +1345,7 @@ def italian(dct):
         for y in new_ingredients:
             if x in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
-                y['name'] = y['name'].replace(x, cheeses[x])
+                y['name'] = y['name'].replace(x, italian_cheeses[x])
 
     for x in italian_cheeses:
         for y in range(0, len(new_steps)):
