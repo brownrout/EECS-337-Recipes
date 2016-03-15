@@ -100,12 +100,17 @@ italian_meats = {
 
 italian_vegetables_list = {
     'squash' : 'zucca',
-    'refried beans' : 'fava beans',
+    'refried bean' : 'fava bean',
+    'lima bean': 'fava bean',
     'butternut squash' : 'zucca',
     'lettuce' : 'radicchio',
     'olives' : 'castelvetrano olives',
+    'celery' : 'tomato',
     'spaghetti squash' : 'zucca',
-    'noodles' : 'spaghetti'
+    'noodles' : 'spaghetti',
+    'rice': 'pasta',
+    'peanut oil': 'olive oil',
+    'wok': 'pan'
 
 }
 
