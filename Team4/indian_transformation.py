@@ -9,7 +9,7 @@ spicy_list = {
 
 }
 
-spicy_stopwords = ['peppers', 'pepper']
+spicy_stopwords = ['peppers', 'pepper', 'canadian-style', 'canadian']
 
 indian_spices = [
     'turmeric',
@@ -131,11 +131,12 @@ vegetables_list = {
     'noodles' : 'rice',
     'penne pasta' : 'rice',
     'spaghetti' :'rice',
+    'elbow macaroni' : 'rice',
     'farfalle pasta': 'rice',
     'macaroni pasta': 'rice',
     'macaroni': 'rice',
     'elbow pasta' : 'rice',
-    #'pasta' :'rice',
+    'pasta' :'rice',
     'peanut oil' : 'vegetable oil',
     'wok' : 'pan',
     'cornstarch' : 'maida',

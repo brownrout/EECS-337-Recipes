@@ -7,7 +7,7 @@ chinese_spicy_list = {
 
 }
 
-chinese_spicy_stopwords = ['paste', 'sauce', 'ground']
+chinese_spicy_stopwords = ['paste', 'sauce', 'ground', 'canadian-style', 'canadian']
 
 chinese_spices = [
     'soy sauce powder',
@@ -125,12 +125,17 @@ chinese_vegetables_list = {
     'arugula' : 'chinese cabbage',
     'olives' : 'chinese olives',
     'spaghetti squash' : 'string beans',
-    'penne pasta' : 'rice',
+    'penne pasta' : 'noodles',
     'spaghetti' :'noodles',
+    'elbow macaroni' : 'rice',
     'farfalle pasta': 'rice',
+    'macaroni pasta': 'rice',
+    'macaroni': 'rice',
+    'elbow pasta' : 'rice',
     'pasta' :'rice',
+    'saucepan': 'wok',
     'pan' : 'wok',
-    'olive oil': 'peanut oil'
+    'olive oil': 'peanut oil',
 
 }
 
