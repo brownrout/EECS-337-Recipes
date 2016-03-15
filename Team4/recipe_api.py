@@ -10,6 +10,8 @@ from carbtransformations import *
 import re
 from copy import deepcopy
 from indian_transformation import *
+from chinese_transformation import *
+from italian_transformation import *
 
 results = {}
 recipe_book = {}
@@ -133,6 +135,34 @@ def pre_parse():
         new = x.rstrip('\n')
         spices.append(new)
 
+    text_file = open("Team4/chinese_general_sauces.txt", "r")
+    lines = text_file.readlines()
+    global chinese_general_sauces
+    for x in lines:
+        new = x.rstrip('\n')
+        chinese_general_sauces.append(new)
+
+    text_file = open("Team4/chinese_general_spices.txt", "r")
+    lines = text_file.readlines()
+    global chinese_general_spices
+    for x in lines:
+        new = x.rstrip('\n')
+        chinese_general_spices.append(new)
+
+    text_file = open("Team4/italian_general_sauces.txt", "r")
+    lines = text_file.readlines()
+    global italian_general_sauces
+    for x in lines:
+        new = x.rstrip('\n')
+        italian_general_sauces.append(new)
+
+    text_file = open("Team4/italian_general_spices.txt", "r")
+    lines = text_file.readlines()
+    global italian_general_spices
+    for x in lines:
+        new = x.rstrip('\n')
+        italian_general_spices.append(new)
+
 def get_ingredients(soup, dct):
     dct["ingredients"] = []
     letters = soup.find_all("span", itemprop="ingredients")
@@ -163,7 +193,7 @@ def get_structuredsteps(soup, dct):
     tokenizer = RegexpTokenizer(r'\w+')
 
     time_units = ['min', 'min.', 'minutes', 'minute', 'hour', 'hours', 'hr', 'hrs', 'hr.', 'hrs.']
-    
+
     ingredient_names = []
     for y in new_ingredients:
         ingredient_names.append(y['name'])
@@ -174,7 +204,7 @@ def get_structuredsteps(soup, dct):
         for y in x.split():
             print y
 
-    
+
     for step in new_steps:
         if step != '':
             method_list = []
@@ -195,7 +225,7 @@ def get_structuredsteps(soup, dct):
             for tool in tools:
                 if tool in step:
                     tools_list.append(tool)
-            
+
             for verb in tool_verb_map:
                 if verb in step:
                     tools_list.append(tool_verb_map[verb])
@@ -204,10 +234,10 @@ def get_structuredsteps(soup, dct):
                 for y in x.split():
                     if y in step:
                         ingredient_list.append(x)
-            
+
             cooking_time = " "
             step_list = tokenizer.tokenize(step)
-            
+
             for x in range(0,len(step_list)-2):
                 if step_list[x].isdigit():
                     if step_list[x+1] in time_units:
@@ -220,7 +250,7 @@ def get_structuredsteps(soup, dct):
                 'ingredients' : ingredient_list
             }
             dct["structuredsteps"].append(d)
-        
+
 
 
 
@@ -352,7 +382,7 @@ def get_tools(soup, dct):
     tokenizer = RegexpTokenizer(r'\w+')
 
     directions_string = get_directions(soup)
-    
+
     ingredients= dct['ingredients']
 
     global tools
@@ -366,7 +396,7 @@ def get_tools(soup, dct):
             three_word_tool = directions_list[x] + ' ' + directions_list[x+1] + ' ' + directions_list[x+2]
             used_word = directions_list[x+1]
             used_word_two = directions_list[x+2]
-        
+
         one_word_tool = directions_list[x]
         for tool in tools:
             if tool == two_word_tool:
@@ -384,7 +414,7 @@ def get_tools(soup, dct):
             tool = tool_verb_map[verb]
             if directions_list[x] == verb and tool not in cnt:
                 cnt[tool] +=1
-    
+
     for x in ingredients:
         for verb in tool_verb_map:
             tool = tool_verb_map[verb]
@@ -429,7 +459,7 @@ def get_methods(soup, dct):
                     cnt['bake'] += 2
                 else:
                     cnt[y] += 1
-            
+
             elif y + "ing" == x.lower():
                 cnt[y] += 1
                 cnt[y + "ing"] += 1
@@ -499,7 +529,7 @@ def print_recipe(dct):
                         print "cooking time: " + elem['cooking time']
                     if len(elem['tools']) != 0:
                         toolString = "tools: " + ', '.join(elem['tools'])
-                        print toolString 
+                        print toolString
                     if len(elem['methods']) != 0:
                         methString = "methods: " + ', '.join(elem['methods'])
                         print methString
@@ -543,7 +573,7 @@ def print_transform_recipe(dct):
             print '\n'
     print '\n'
 
-    
+
 
 
 def transform(dct,transType):
@@ -676,7 +706,7 @@ def transform(dct,transType):
     for word in transformed_recipe['title'].split():
         if word in subs:
             new_title = new_title.replace(word,substitutes[word][choice])
-    
+
     transformed_recipe['title'] =  " ".join(new_title.split()).lower()
 
     if (transType == 1):
@@ -955,15 +985,15 @@ def highcarb(dct):
     return transformed_recipe
 
 def indian(dct):
-    
+
     transformed_recipe = deepcopy(dct)
     new_ingredients = transformed_recipe['ingredients']
     new_steps = transformed_recipe['steps']
     new_title = transformed_recipe['title']
     ingredients_dict = {}
-    
+
     spice_choice = random.randint(0, 2)
-    
+
     for y in new_ingredients:
         for z in spicy_stopwords:
             if z in y['name'].lower():
@@ -1072,7 +1102,7 @@ def indian(dct):
 
 
     meat_choice= random.randint(0, 1)
-    
+
     for x in meats:
         for y in new_ingredients:
             if x in y['name'].lower():
@@ -1114,6 +1144,312 @@ def indian(dct):
     print_transform_recipe(transformed_recipe)
     return transformed_recipe
 
+def chinese(dct):
+
+    transformed_recipe = deepcopy(dct)
+    new_ingredients = transformed_recipe['ingredients']
+    new_steps = transformed_recipe['steps']
+    new_title = transformed_recipe['title']
+    ingredients_dict = {}
+
+    spice_choice = random.randint(0, 2)
+
+    for y in new_ingredients:
+        for z in chinese_spicy_stopwords:
+            if z in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(z, '')
+
+    for y in new_title:
+        for z in chinese_spicy_stopwords:
+            if z in new_title:
+                new_title = new_title.encode('utf-8')
+                new_title = new_title.replace(z, '')
+
+    for x in chinese_spicy_list:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                selection = chinese_spicy_list[x][spice_choice]
+                ingredients_dict[x] = selection
+                y['name'] = y['name'].replace(x, selection)
+
+    for x in chinese_spicy_list:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
+
+    for x in chinese_spicy_list:
+         if x in new_title.lower():
+            new_title = new_title.replace(x, ingredients_dict[x])
+
+    for x in chinese_cheeses:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, chinese_cheeses[x])
+
+    for x in chinese_cheeses:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, chinese_cheeses[x])
+
+    for x in chinese_cheeses:
+         if x in new_title.lower():
+            new_title = new_title.replace(x, chinese_cheeses[x])
+
+    for x in chinese_sauce_list:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, chinese_sauce_list[x])
+
+    for x in chinese_sauce_list:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, chinese_sauce_list[x])
+
+    for x in chinese_sauce_list:
+         if x in new_title.lower():
+            new_title = new_title.replace(x, chinese_sauce_list[x])
+
+    my_sauces = list(chinese_sauces)
+
+    for x in chinese_general_sauces:
+        for y in new_ingredients:
+            sauce_choice = random.randint(0, len(my_sauces)-1)
+            y['name'] = y['name'].encode('utf-8')
+            if x in y['name'].lower():
+                selection = my_sauces[sauce_choice]
+                ingredients_dict[x] = selection
+                y['name'] = y['name'].replace(x, selection)
+                my_sauces.remove(selection)
+
+    for x in chinese_general_sauces:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
+
+
+
+
+    my_spices = list(chinese_spices)
+
+    for x in chinese_general_spices:
+        for y in new_ingredients:
+            spice_choice_two = random.randint(0, len(my_spices)-1)
+            y['name'] = y['name'].encode('utf-8')
+            if x in y['name'].lower():
+                selection = my_spices[spice_choice_two]
+                ingredients_dict[x] = selection
+                y['name'] = y['name'].replace(x, selection)
+                my_spices.remove(selection)
+
+    for x in chinese_general_spices:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
+
+
+    meat_choice= random.randint(0, 1)
+
+    for x in chinese_meats:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                selection = chinese_meats[x][meat_choice]
+                ingredients_dict[x] = selection
+                y['name'] = y['name'].replace(x, selection)
+
+    for x in chinese_meats:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
+
+    for x in chinese_meats:
+        if x in new_title.lower():
+            new_title = new_title.replace(x, ingredients_dict[x])
+
+
+
+    for x in chinese_vegetables_list:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, chinese_vegetables_list[x])
+
+    for x in chinese_vegetables_list:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, chinese_vegetables_list[x])
+
+    for x in chinese_vegetables_list:
+        if x in new_title.lower():
+            new_title = new_title.replace(x, chinese_vegetables_list[x])
+
+
+    transformed_recipe['steps'] = new_steps
+    transformed_recipe['title'] = new_title + " (Chinese Version)"
+    transformed_recipe['ingredients'] = new_ingredients
+    print_transform_recipe(transformed_recipe)
+    return transformed_recipe
+
+
+def italian(dct):
+
+    transformed_recipe = deepcopy(dct)
+    new_ingredients = transformed_recipe['ingredients']
+    new_steps = transformed_recipe['steps']
+    new_title = transformed_recipe['title']
+    ingredients_dict = {}
+
+    spice_choice = random.randint(0, 2)
+
+    for y in new_ingredients:
+        for z in spicy_stopwords:
+            if z in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(z, '')
+
+    for y in new_title:
+        for z in spicy_stopwords:
+            if z in new_title:
+                new_title = new_title.encode('utf-8')
+                new_title = new_title.replace(z, '')
+
+
+    for x in spicy_list:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                selection = spicy_list[x][spice_choice]
+                ingredients_dict[x] = selection
+                y['name'] = y['name'].replace(x, selection)
+
+    for x in spicy_list:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
+
+    for x in spicy_list:
+         if x in new_title.lower():
+            new_title = new_title.replace(x, ingredients_dict[x])
+
+
+
+    for x in cheeses:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, cheeses[x])
+
+    for x in cheeses:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, cheeses[x])
+
+    for x in cheeses:
+         if x in new_title.lower():
+            new_title = new_title.replace(x, cheeses[x])
+
+    for x in sauce_list:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, sauce_list[x])
+
+    for x in sauce_list:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, sauce_list[x])
+
+    for x in sauce_list:
+         if x in new_title.lower():
+            new_title = new_title.replace(x, sauce_list[x])
+
+    my_sauces = list(italian_sauces)
+
+    for x in sauces:
+        for y in new_ingredients:
+            sauce_choice = random.randint(0, len(my_sauces)-1)
+            y['name'] = y['name'].encode('utf-8')
+            if x in y['name'].lower():
+                selection = my_sauces[sauce_choice]
+                ingredients_dict[x] = selection
+                y['name'] = y['name'].replace(x, selection)
+                my_sauces.remove(selection)
+
+    for x in sauces:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
+
+
+
+
+    my_spices = list(italian_spices)
+
+    for x in spices:
+        for y in new_ingredients:
+            spice_choice_two = random.randint(0, len(my_spices)-1)
+            y['name'] = y['name'].encode('utf-8')
+            if x in y['name'].lower():
+                selection = my_spices[spice_choice_two]
+                ingredients_dict[x] = selection
+                y['name'] = y['name'].replace(x, selection)
+                my_spices.remove(selection)
+
+    for x in spices:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
+
+
+    meat_choice= random.randint(0, 1)
+
+    for x in meats:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                selection = meats[x][meat_choice]
+                ingredients_dict[x] = selection
+                y['name'] = y['name'].replace(x, selection)
+
+    for x in meats:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
+
+    for x in meats:
+        if x in new_title.lower():
+            new_title = new_title.replace(x, ingredients_dict[x])
+
+
+
+    for x in vegetables_list:
+        for y in new_ingredients:
+            if x in y['name'].lower():
+                y['name'] = y['name'].encode('utf-8')
+                y['name'] = y['name'].replace(x, vegetables_list[x])
+
+    for x in vegetables_list:
+        for y in range(0, len(new_steps)):
+            if x in new_steps[y]:
+                new_steps[y] = new_steps[y].replace(x, vegetables_list[x])
+
+    for x in vegetables_list:
+        if x in new_title.lower():
+            new_title = new_title.replace(x, vegetables_list[x])
+
+
+    transformed_recipe['steps'] = new_steps
+    transformed_recipe['title'] = new_title + " (Italian Version)"
+    transformed_recipe['ingredients'] = new_ingredients
+    print_transform_recipe(transformed_recipe)
+    return transformed_recipe
+
+
+
 
 def main():
     '''This is our main function!'''
@@ -1129,7 +1465,7 @@ def main():
     #recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/69446/pesto-pasta-with-green-beans-and-potatoes/?internalSource=search%20result&referringContentType=search%20results')
 
     recipe_book[len(recipe_book.keys())] = autograder('http://allrecipes.com/recipe/18866/canadian-bacon-macaroni-and-cheese/')
-    
+
     while True:
         print '\n'
         print "\noptions:\n1. enter recipe (via url)\n2. transform an existing recipe\n"
@@ -1142,7 +1478,7 @@ def main():
                 for key in recipe_book:
                     print str(key) + " : " + recipe_book[key]['title']
                 choice = input("which recipe: ")
-                print "\noptions:\n1. to pescatarian\n2. from pescatarian\n3. low fat\n4. high fat\n5. low carb\n6. high carb\n7. to vegetarian\n8. from vegetarian\n9. Indian"
+                print "\noptions:\n1. to pescatarian\n2. from pescatarian\n3. low fat\n4. high fat\n5. low carb\n6. high carb\n7. to vegetarian\n8. from vegetarian\n9. Indian\n10. Chinese\n11. Italian"
                 choice2 = input("which transform: ")
                 if (choice2 == 1):
                     recipe_book[len(recipe_book.keys())] = transform(recipe_book[choice],1)
@@ -1162,6 +1498,10 @@ def main():
                     recipe_book[len(recipe_book.keys())] = transform(recipe_book[choice],4)
                 elif (choice2 == 9):
                     recipe_book[len(recipe_book.keys())] = indian(recipe_book[choice])
+                elif (choice2 == 10)
+                    recipe_book[len(recipe_book.keys())] = chinese(recipe_book[choice])
+                elif (choice2 == 11)
+                    recipe_book[len(recipe_book.keys())] = italian(recipe_book[choice])
                 else:
                     print "invalid choice"
             else:

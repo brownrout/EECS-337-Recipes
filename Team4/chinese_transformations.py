@@ -1,4 +1,4 @@
-spicy_list = {
+chinese_spicy_list = {
     'jalapeno' : ['curry paste', 'chili sauce', 'curry paste'],
     'wasabi': ['curry paste', 'chili sauce', 'curry paste'],
     'tobasco': ['curry paste', 'chili sauce', 'curry paste'],
@@ -7,7 +7,7 @@ spicy_list = {
 
 }
 
-spicy_stopwords = ['paste', 'sauce']
+chinese_spicy_stopwords = ['paste', 'sauce']
 
 chinese_spices = [
     'soy sauce powder',
@@ -30,7 +30,7 @@ chinese_spices = [
 
 ]
 
-cheeses = {
+chinese_cheeses = {
     'mozzerella': 'rushan cheese',
     'cheddar' : 'rushan cheese',
     'anejo enchilado' :'rushan cheese',
@@ -78,7 +78,7 @@ cheeses = {
 
 }
 
-sauce_list = {
+chinese_sauce_list = {
     'yogurt' : 'nai lao',
     'gravy' : 'chinese brown gravy'
 }
@@ -97,7 +97,7 @@ chinese_sauces = [
 
 
 
-meats = {
+chinese_meats = {
     'steak': ['duck', 'chicken'],
     'beef': ['duck', 'chicken'],
     'tuna' : ['shrimp', 'oyster'],
@@ -109,7 +109,7 @@ meats = {
 
 }
 
-vegetables_list = {
+chinese_vegetables_list = {
     'okra' : 'bok choy',
     'asparagus' : 'bok choy',
     'squash' : 'choy sum',
