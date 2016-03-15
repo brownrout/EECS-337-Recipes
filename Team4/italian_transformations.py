@@ -1,4 +1,4 @@
-spicy_list = {
+italian_spicy_list = {
     'jalapeno' : ['black pepper', 'chili flakes', 'black pepper'],
     'wasabi': ['black pepper', 'chili flakes', 'black pepper'],
     'tobasco': ['black pepper', 'chili flakes', 'black pepper'],
@@ -7,7 +7,7 @@ spicy_list = {
 
 }
 
-spicy_stopwords = ['pepper', 'flakes']
+italian_spicy_stopwords = ['pepper', 'flakes']
 
 italian_spices = [
     'rosemary',
@@ -29,7 +29,7 @@ italian_spices = [
     'sun-dried tomatoes'
 ]
 
-cheeses = {
+italian_cheeses = {
     'cheddar' : 'gorgonzola',
     'anejo enchilado' :'gorgonzola',
     'blue': 'robiola piemonte',
@@ -68,7 +68,7 @@ cheeses = {
 
 }
 
-sauce_list = {
+italian_sauce_list = {
     'yogurt' : 'italian yogurt',
     'gravy' : 'italian gravy'
 }
@@ -87,7 +87,7 @@ italian_sauces = [
 
 
 
-meats = {
+italian_meats = {
     'steak': ['coppa', 'chicken'],
     'beef': ['coppa', 'chicken'],
     'tuna' : ['shrimp', 'crab'],
@@ -98,7 +98,7 @@ meats = {
 
 }
 
-vegetables_list = {
+italian_vegetables_list = {
     'squash' : 'zucca',
     'refried beans' : 'fava beans',
     'butternut squash' : 'zucca',

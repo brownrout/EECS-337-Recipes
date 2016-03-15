@@ -1306,70 +1306,70 @@ def italian(dct):
     spice_choice = random.randint(0, 2)
 
     for y in new_ingredients:
-        for z in spicy_stopwords:
+        for z in italian_spicy_stopwords:
             if z in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(z, '')
 
     for y in new_title:
-        for z in spicy_stopwords:
+        for z in italian_spicy_stopwords:
             if z in new_title:
                 new_title = new_title.encode('utf-8')
                 new_title = new_title.replace(z, '')
 
 
-    for x in spicy_list:
+    for x in italian_spicy_list:
         for y in new_ingredients:
             if x in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
-                selection = spicy_list[x][spice_choice]
+                selection = italian_spicy_list[x][spice_choice]
                 ingredients_dict[x] = selection
                 y['name'] = y['name'].replace(x, selection)
 
-    for x in spicy_list:
+    for x in italian_spicy_list:
         for y in range(0, len(new_steps)):
             if x in new_steps[y]:
                 new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
 
-    for x in spicy_list:
+    for x in italian_spicy_list:
          if x in new_title.lower():
             new_title = new_title.replace(x, ingredients_dict[x])
 
 
 
-    for x in cheeses:
+    for x in italian_cheeses:
         for y in new_ingredients:
             if x in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
                 y['name'] = y['name'].replace(x, cheeses[x])
 
-    for x in cheeses:
+    for x in italian_cheeses:
         for y in range(0, len(new_steps)):
             if x in new_steps[y]:
-                new_steps[y] = new_steps[y].replace(x, cheeses[x])
+                new_steps[y] = new_steps[y].replace(x, italian_cheeses[x])
 
-    for x in cheeses:
+    for x in italian_cheeses:
          if x in new_title.lower():
-            new_title = new_title.replace(x, cheeses[x])
+            new_title = new_title.replace(x, italian_cheeses[x])
 
-    for x in sauce_list:
+    for x in italian_sauce_list:
         for y in new_ingredients:
             if x in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
-                y['name'] = y['name'].replace(x, sauce_list[x])
+                y['name'] = y['name'].replace(x, italian_sauce_list[x])
 
-    for x in sauce_list:
+    for x in italian_sauce_list:
         for y in range(0, len(new_steps)):
             if x in new_steps[y]:
-                new_steps[y] = new_steps[y].replace(x, sauce_list[x])
+                new_steps[y] = new_steps[y].replace(x, italian_sauce_list[x])
 
-    for x in sauce_list:
+    for x in italian_sauce_list:
          if x in new_title.lower():
-            new_title = new_title.replace(x, sauce_list[x])
+            new_title = new_title.replace(x, italian_sauce_list[x])
 
     my_sauces = list(italian_sauces)
 
-    for x in sauces:
+    for x in italian_general_sauces:
         for y in new_ingredients:
             sauce_choice = random.randint(0, len(my_sauces)-1)
             y['name'] = y['name'].encode('utf-8')
@@ -1379,7 +1379,7 @@ def italian(dct):
                 y['name'] = y['name'].replace(x, selection)
                 my_sauces.remove(selection)
 
-    for x in sauces:
+    for x in italian_general_sauces:
         for y in range(0, len(new_steps)):
             if x in new_steps[y]:
                 new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
@@ -1389,7 +1389,7 @@ def italian(dct):
 
     my_spices = list(italian_spices)
 
-    for x in spices:
+    for x in italian_general_spices:
         for y in new_ingredients:
             spice_choice_two = random.randint(0, len(my_spices)-1)
             y['name'] = y['name'].encode('utf-8')
@@ -1399,7 +1399,7 @@ def italian(dct):
                 y['name'] = y['name'].replace(x, selection)
                 my_spices.remove(selection)
 
-    for x in spices:
+    for x in italian_general_spices:
         for y in range(0, len(new_steps)):
             if x in new_steps[y]:
                 new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
@@ -1407,39 +1407,39 @@ def italian(dct):
 
     meat_choice= random.randint(0, 1)
 
-    for x in meats:
+    for x in italian_meats:
         for y in new_ingredients:
             if x in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
-                selection = meats[x][meat_choice]
+                selection = italian_meats[x][meat_choice]
                 ingredients_dict[x] = selection
                 y['name'] = y['name'].replace(x, selection)
 
-    for x in meats:
+    for x in italian_meats:
         for y in range(0, len(new_steps)):
             if x in new_steps[y]:
                 new_steps[y] = new_steps[y].replace(x, ingredients_dict[x])
 
-    for x in meats:
+    for x in italian_meats:
         if x in new_title.lower():
             new_title = new_title.replace(x, ingredients_dict[x])
 
 
 
-    for x in vegetables_list:
+    for x in italian_vegetables_list:
         for y in new_ingredients:
             if x in y['name'].lower():
                 y['name'] = y['name'].encode('utf-8')
-                y['name'] = y['name'].replace(x, vegetables_list[x])
+                y['name'] = y['name'].replace(x, italian_vegetables_list[x])
 
-    for x in vegetables_list:
+    for x in italian_vegetables_list:
         for y in range(0, len(new_steps)):
             if x in new_steps[y]:
-                new_steps[y] = new_steps[y].replace(x, vegetables_list[x])
+                new_steps[y] = new_steps[y].replace(x, italian_vegetables_list[x])
 
-    for x in vegetables_list:
+    for x in italian_vegetables_list:
         if x in new_title.lower():
-            new_title = new_title.replace(x, vegetables_list[x])
+            new_title = new_title.replace(x, italian_vegetables_list[x])
 
 
     transformed_recipe['steps'] = new_steps
