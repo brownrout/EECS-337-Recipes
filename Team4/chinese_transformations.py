@@ -7,7 +7,7 @@ chinese_spicy_list = {
 
 }
 
-chinese_spicy_stopwords = ['paste', 'sauce']
+chinese_spicy_stopwords = ['paste', 'sauce', 'ground']
 
 chinese_spices = [
     'soy sauce powder',
@@ -100,6 +100,7 @@ chinese_sauces = [
 chinese_meats = {
     'steak': ['duck', 'chicken'],
     'beef': ['duck', 'chicken'],
+    'sausage':['duck', 'chicken'],
     'tuna' : ['shrimp', 'oyster'],
     'anchovies' : ['shrimp', 'salmon'],
     'pork' : ['chicken', 'duck'],
@@ -128,6 +129,8 @@ chinese_vegetables_list = {
     'spaghetti' :'noodles',
     'farfalle pasta': 'rice',
     'pasta' :'rice',
+    'pan' : 'wok',
+    'olive oil': 'peanut oil'
 
 }
 
