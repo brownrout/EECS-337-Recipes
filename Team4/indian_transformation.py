@@ -117,7 +117,6 @@ vegetables_list = {
     'okra' : 'bhindi',
     'asparagus' : 'bhindi',
     'squash' : 'aloo',
-    'corn' : 'capsicum',
     'refried beans' : 'rajma',
     'chick peas' : 'chole',
     'butternut squash' : 'eggplant',
@@ -133,7 +132,14 @@ vegetables_list = {
     'penne pasta' : 'rice',
     'spaghetti' :'rice',
     'farfalle pasta': 'rice',
-    'pasta' :'rice',
+    'macaroni pasta': 'rice',
+    'macaroni': 'rice',
+    'elbow pasta' : 'rice',
+    #'pasta' :'rice',
+    'peanut oil' : 'vegetable oil',
+    'wok' : 'pan',
+    'cornstarch' : 'maida',
+    'margarine' : 'ghee'
 
 }
 
