@@ -202,11 +202,7 @@ def get_structuredsteps(soup, dct):
     for y in new_ingredients:
         ingredient_names.append(y['name'])
 
-    for x in ingredient_names:
-        x.split()
-        print x.split()
-        for y in x.split():
-            print y
+
 
 
     for step in new_steps:
