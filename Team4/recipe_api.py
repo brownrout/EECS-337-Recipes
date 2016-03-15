@@ -43,30 +43,30 @@ italian_general_spices = []
 decrement_check = {"mixing bowl": "mix", "baking soda": "bake", "baking powder":"bake", "preheat" : "preheat"}
 
 #move elsewhere later
-tool_verb_map = {
+actions = {
   'chop':'knife',
-  'basting' : 'baster',
-  'baste' : 'baster',
-  'stir':'wooden spoon',
-  'beat':'fork',
-  'cream':'hand mixer',
+  'cut' : 'knife',
+  'julienne':'knife',
+  'mince':'knife',
   'dice':'knife',
-  'drizzle':'spoon',
+  'minced' : 'knife',
+  'slice':'knife',
+  'stir':'wooden spoon',
   'fold':'wooden spoon',
   'glaze':'spoon',
-  'julienne':'knife',
-  'marinate':'bowl',
-  'mince':'knife',
-  'minced' : 'knife',
-  'shred':'food processor',
+  'drizzle':'spoon',
+  'beat':'fork',
+  'basting' : 'baster',
+  'baste' : 'baster',
   'sift':'colander',
-  'slice':'knife',
+  'cream':'hand mixer',
+  'grate':'grater',
+  'whisk':'whisk',
+  'marinate':'bowl',
+  'shred':'food processor',
   'peel':'peeler',
   'puree':'blender',
-  'grate':'grater',
   'crush':'pestle mortar',
-  'whisk':'whisk',
-  'cut' : 'knife'
 }
 
 def autograder(url):
@@ -230,9 +230,9 @@ def get_structuredsteps(soup, dct):
                 if tool in step:
                     tools_list.append(tool)
 
-            for verb in tool_verb_map:
+            for verb in actions:
                 if verb in step:
-                    tools_list.append(tool_verb_map[verb])
+                    tools_list.append(actions[verb])
             ingredient_list = []
             for x in ingredient_names:
                 for y in x.split():
@@ -414,14 +414,14 @@ def get_tools(soup, dct):
             elif tool == one_word_tool and tool not in used_list:
                 cnt[tool] +=1
 
-        for verb in tool_verb_map:
-            tool = tool_verb_map[verb]
+        for verb in actions:
+            tool = actions[verb]
             if directions_list[x] == verb and tool not in cnt:
                 cnt[tool] +=1
 
     for x in ingredients:
-        for verb in tool_verb_map:
-            tool = tool_verb_map[verb]
+        for verb in actions:
+            tool = actions[verb]
             if verb in x['name'] and tool not in cnt:
                 cnt[tool] += 1
             elif verb in x['descriptor'] and tool not in cnt:
