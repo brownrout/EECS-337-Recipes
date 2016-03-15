@@ -751,13 +751,13 @@ def high2lowfat(dct):
                 y['name'] = y['name'].replace(x, substitutions[x])
 
 
-    for z in (high_to_low_stopwords):
-        if z == ',':
-            pass
-        else:
-            for y in new_steps:
-                if z in y.lower():
-                    new_steps = new_steps.remove(z)
+    # for z in (high_to_low_stopwords):
+    #     if z == ',':
+    #         pass
+    #     else:
+    #         for y in new_steps:
+    #             if z in y.lower():
+    #                 new_steps = new_steps.remove(z)
 
     #replacements in steps
     split_steps = []
@@ -843,14 +843,14 @@ def low2highfat(dct):
 
 
 
-    for z in low_to_high_stopwords:
-        if z == ',':
-            pass
-        else:
-            for y in new_steps:
-                if z in y.lower():
-                    y = y.encode('utf-8')
-                    y = y.replace(low_to_high_stopwords[z], z)
+    # for z in low_to_high_stopwords:
+    #     if z == ',':
+    #         pass
+    #     else:
+    #         for y in new_steps:
+    #             if z in y.lower():
+    #                 y = y.encode('utf-8')
+    #                 y = y.replace(low_to_high_stopwords[z], z)
                     #print new_steps
 
 
@@ -962,14 +962,14 @@ def highcarb(dct):
 
 
 
-    for z in low_to_highcarb_stopwords:
-        if z == ',':
-            pass
-        else:
-            for y in new_steps:
-                if z in y.lower():
-                    y = y.encode('utf-8')
-                    y = y.remove(z)
+    # for z in low_to_highcarb_stopwords:
+    #     if z == ',':
+    #         pass
+    #     else:
+    #         for y in new_steps:
+    #             if z in y.lower():
+    #                 y = y.encode('utf-8')
+    #                 y = y.remove(z)
 
 
     for x in carbsubstitutions:
