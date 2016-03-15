@@ -24,7 +24,7 @@ chinese_spices = [
     'tumeric',
     'cloves',
     'hot mustard',
-    'bird’s eye chili pepper',
+    'birds eye chili pepper',
     'cinnamon sticks',
     'kaffir lime leaves'
 

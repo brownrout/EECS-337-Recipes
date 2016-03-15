@@ -10,8 +10,8 @@ from carbtransformations import *
 import re
 from copy import deepcopy
 from indian_transformation import *
-from chinese_transformation import *
-from italian_transformation import *
+from chinese_transformations import *
+from italian_transformations import *
 
 results = {}
 recipe_book = {}
@@ -35,6 +35,10 @@ methods = []
 preparations = []
 sauces = []
 spices = []
+chinese_general_sauces = []
+chinese_general_spices = []
+italian_general_sauces = []
+italian_general_spices = []
 
 decrement_check = {"mixing bowl": "mix", "baking soda": "bake", "baking powder":"bake", "preheat" : "preheat"}
 
@@ -1498,9 +1502,9 @@ def main():
                     recipe_book[len(recipe_book.keys())] = transform(recipe_book[choice],4)
                 elif (choice2 == 9):
                     recipe_book[len(recipe_book.keys())] = indian(recipe_book[choice])
-                elif (choice2 == 10)
+                elif (choice2 == 10):
                     recipe_book[len(recipe_book.keys())] = chinese(recipe_book[choice])
-                elif (choice2 == 11)
+                elif (choice2 == 11):
                     recipe_book[len(recipe_book.keys())] = italian(recipe_book[choice])
                 else:
                     print "invalid choice"

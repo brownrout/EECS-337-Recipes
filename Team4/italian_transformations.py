@@ -75,7 +75,7 @@ italian_sauce_list = {
 
 italian_sauces = [
     'marinara sauce',
-    'neapolitan ragù',
+    'neapolitan ragu',
     'pesto',
     'ragu',
     'vodka sauce',
